@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID"
+	version="3.0">
+	<display-name>asciidoctorgenerator-web</display-name>
+	<welcome-file-list>
+		<welcome-file>index</welcome-file>
+	</welcome-file-list>
+	
+	<jsp-config>
+		<taglib>
+                    <taglib-uri>http://www.asciidocgenerator.org/asciidocgenerator</taglib-uri>
+                    <taglib-location>/WEB-INF/tld/asciidocgenerator.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+
+
+	<error-page>
+		<location>/app/error/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/app/error/error404.jsp</location>
+	</error-page>
+	
+	<filter>
+   <filter-name>navigationFilter</filter-name>
+   <filter-class>org.asciidocgenerator.ui.NavigationStateFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	   <filter-name>navigationFilter</filter-name>
+	   <url-pattern>/navigation/*</url-pattern>
+	   <url-pattern>/article/*</url-pattern>
+	   <url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
+

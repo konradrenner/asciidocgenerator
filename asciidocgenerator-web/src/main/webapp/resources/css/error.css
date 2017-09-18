@@ -1,0 +1,23 @@
+#errorMessage {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	font-family: "Open Sans", "DejaVu Sans", sans-serif;
+	font-size: 48pt;
+	width: 100%;
+	margin-top: 250px;
+	color: #036fab;
+	opacity: 0.85;
+}
+
+#errorMessage span{
+	padding: 10px;
+}
+
+#message, #link {
+	font-size: 36pt;
+}
+
+#errorCode {
+	color: #333;
+}
