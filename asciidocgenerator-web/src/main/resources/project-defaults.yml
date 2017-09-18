@@ -1,0 +1,23 @@
+swarm:
+    naming:
+        bindings:
+            java:global/gitlabtoken:
+                binding-type: simple
+                type: java.lang.String
+                value: aaa
+            java:global/htmldirectory:
+                binding-type: simple
+                type: java.lang.String
+                value: /tmp
+            java:global/defaultGroupName:
+                binding-type: simple
+                type: java.lang.String
+                value: Doku-Plattform
+    datasources:
+        data-sources:
+            GeneratorDS:
+                driver-name: h2
+                connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+                user-name: sa
+                password: sa
+            
