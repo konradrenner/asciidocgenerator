@@ -8,7 +8,7 @@ swarm:
             java:global/htmldirectory:
                 binding-type: simple
                 type: java.lang.String
-                value: /tmp
+                value: ~/.asciidocgenerator/files
             java:global/defaultGroupName:
                 binding-type: simple
                 type: java.lang.String

@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.regex.Pattern;
-import javax.annotation.Resource;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -35,9 +34,6 @@ public class ArticleServlet
 
 	@Inject
 	private ContentService service;
-
-	@Resource(lookup = "java:global/htmldirectory")
-	private String baseDirectory;
 
 	@Inject
 	private Event<ArticleSelectedEvent> event;
@@ -113,5 +109,5 @@ public class ArticleServlet
 			}
 		}
 		resp.sendError(404);
-    }
+	}
 }

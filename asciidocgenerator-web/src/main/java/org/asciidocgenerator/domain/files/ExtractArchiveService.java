@@ -10,24 +10,24 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
-
-import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
-
+import javax.inject.Inject;
+import org.asciidocgenerator.BaseDirectoryService;
 import org.asciidocgenerator.Logged;
 
 @Dependent
 @Logged
 public class ExtractArchiveService {
 
-	@Resource(lookup = "java:global/htmldirectory")
-	private String baseDirectory;
+	@Inject
+	private BaseDirectoryService baseDirectoryService;
 
 	public Path extract(Path source, String subdirectory) throws IOException {
 		try (FileSystem zipFileSystem = FileSystems.newFileSystem(source, null)) {
 			final Path root = zipFileSystem.getPath("/");
 
-			Path destination = Files.createDirectories(Paths.get(baseDirectory, subdirectory));
+			Path destination = Files.createDirectories(Paths.get(	baseDirectoryService.getBaseDirectory(),
+																	subdirectory));
 			deleteDirectoryIfExists(destination);
 			Unzip unzip = new Unzip(destination);
 
