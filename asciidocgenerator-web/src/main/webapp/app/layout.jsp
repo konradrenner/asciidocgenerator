@@ -7,8 +7,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title><c:out value="${UIService.titleName}" /></title>
-	<link rel="icon" href="<c:url value="/resources/favicon.ico" />" type="image/x-icon">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+        <link rel="icon" href="<c:url value="/resources/favicon.png" />" type="image/x-icon">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/style.css" />" />
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/asciidoctor.css" />" />
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/coderay.css" />" />

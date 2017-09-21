@@ -70,7 +70,6 @@ body {
 
 .mainNavigation {
     background-color: #036fab; 
-    background-color: #333;
 	position: fixed;
 	margin: 0 auto;
 	width: 100%;
@@ -85,19 +84,10 @@ body {
 	box-shadow: 0px -4px 40px 1px rgba(0, 0, 0, 0.75);
 }
 
-/*
-.mainNavigation a:link, .mainNavigation a:visited, .mainNavigation a {
-	padding: 10px;
-	color: white;
-	font-size: 13pt;
-	text-decoration: none;
-	outline: none;
-}*/
 
 .mainNavigation li, .mainNavigation li.link {
 	padding: 14px 5px;
         color: white; 
-        background-color: #c2dfef;
 }
 
 .mainNavigation li.link:hover, .mainNavigation li.selectedMenuItem {
