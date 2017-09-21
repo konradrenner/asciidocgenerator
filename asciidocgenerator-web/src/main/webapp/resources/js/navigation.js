@@ -67,12 +67,13 @@ var SideNavigation =
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
 		      notToggledElements[i],
-		      '/asciidoctorgenerator-web/resources/icons/expand_less.png',
-		      '/asciidoctorgenerator-web/resources/icons/expand_more.png');
+                            BaseContext.get() + '/resources/icons/expand_less.png',
+                            BaseContext.get() + '/resources/icons/expand_more.png');
 	    }
     },
 
-    foldAll : function(toggler) {
+            foldAll: function (toggler) {
+
 	    toggler.setAttribute('onClick', 'SideNavigation.unfoldAll(this)')
 	    toggler.classList.remove('allSelectorToggled');
 	    toggler.classList.add('allSelectorNottoggled');
@@ -80,8 +81,8 @@ var SideNavigation =
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
 		      notToggledElements[i],
-		      '/asciidoctorgenerator-web/resources/icons/expand_less.png',
-		      '/asciidoctorgenerator-web/resources/icons/expand_more.png');
+                            BaseContext.get() + '/resources/icons/expand_less.png',
+                            BaseContext.get() + '/resources/icons/expand_more.png');
 	    }
     }
   };
@@ -109,7 +110,7 @@ var MainNavigation = {
 
   decodeGroupName : function(toggler, content) {
 	  toggler.innerHTML = decodeURI(content);
-  }
+    }
 }
 
 var NavigationGroup = {
@@ -144,7 +145,7 @@ var Category = {
 	  }
 
 	  toggler.classList.add('categorieToggled');
-	  $.get("/asciidoctorgenerator-web/category?categoriename=" + categoryName, {}, function(result) {
+        $.get(BaseContext.get() + "/category?categoriename=" + categoryName, {}, function (result) {
 		  $("#categoriesContent").html(result);
 		  document.getElementById('document').id = '';
 		  document.getElementById('articleList').id = '';
@@ -216,3 +217,9 @@ var DropDown = {
 		}
 	}
 };
+
+var BaseContext = {
+    get: function () {
+        return document.getElementById('baseContext').getAttribute("href");
+    }
+}

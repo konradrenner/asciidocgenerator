@@ -1,9 +1,7 @@
 package org.asciidocgenerator.ui;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.asciidocgenerator.Trail;
 import org.asciidocgenerator.domain.content.Article;
 import org.asciidocgenerator.domain.content.Categorie;
@@ -56,11 +54,12 @@ public class PageService {
 	}
 
 	/**
-	 * Gibt den aufgerufenene Relativen Pfad zurück:<br/>
-	 * Aufgerufener Pfad: http://localhost:8080/asciidoctorgenerator-web/article/Projekt2.html<br/>
-	 * Ergebnis: article/Projekt2.html
+	 * Returns the relative path:<br/>
+	 * example:
+	 * http://localhost:8080/asciidoctorgenerator-web/article/Projekt2.html<br/>
+	 * returns: article/Projekt2.html
 	 * 
-	 * @return aufgerufenene Relativen Pfad
+	 * @return the relative path
 	 */
 	public Trail getRequestedRelativeUrl() {
 		String calledUri = request.getRequestURI();
