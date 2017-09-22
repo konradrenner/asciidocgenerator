@@ -1,14 +1,11 @@
 package org.asciidocgenerator.ui.tags;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.SortedSet;
 import java.util.function.Supplier;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-
 import org.asciidocgenerator.domain.navigation.NavigationTree;
 import org.asciidocgenerator.domain.navigation.NavigationTreeNode;
 
@@ -62,7 +59,7 @@ public class TreeTag
 
 	void processNode(NavigationTreeNode node, JspWriter jspWriter, boolean hiddenNode) throws IOException {
 		if (node.getChilds().isEmpty()) {
-			jspWriter.print(createNodeTag(node, hiddenNode));
+			jspWriter.print(createNodeTag(node));
 		} else {
 			jspWriter.print(createFolderStartTag(node, hiddenNode));
 			iterateFolder(node.getChilds(), jspWriter, true);
@@ -87,34 +84,21 @@ public class TreeTag
 		return "</ul></li>";
 	}
 
-	String createNodeTag(NavigationTreeNode node, boolean hidden) {
+	String createNodeTag(NavigationTreeNode node) {
 		StringBuilder sb = new StringBuilder("<li id='");
 		sb.append(node.getNavigationPath());
-		if (hidden) {
-			// sb.append("' class='hiddenElement");
-		}
 		sb.append("' >");
 		sb.append(buildDescriptorForLayout(node, this::buildPlaceholderForLayout));
 		sb.append("</li>");
 		return sb.toString();
 	}
 
-	String buildDescriptorForLayout(NavigationTreeNode node,
-									Supplier<String> function) {
+	String buildDescriptorForLayout(NavigationTreeNode node, Supplier<String> function) {
 		return "<span>" + function.get() + buildLink(node) + "</span>";
 	}
 
 	String buildToggleItem() {
-		return "<span class=\"hoverable nottoggled toggleIcon\" onclick=\""	+ buildJavascript()
-				+ "\" >"
-				+ "<img src=\""
-				+ contextPath
-				+ "/resources"
-				+ File.separator
-				+ "icons"
-				+ File.separator
-				+ "expand_more.png\" />"
-				+ "</span>";
+		return "<span class=\"hoverable nottoggled toggleIcon\" onclick=\"" + buildJavascript() + "\" >" + "</span>";
 	}
 
 	String buildPlaceholderForLayout() {
@@ -122,14 +106,7 @@ public class TreeTag
 	}
 
 	String buildJavascript() {
-		StringBuilder sb = new StringBuilder(this.toggleFunction);
-		String iconPath = contextPath + "/resources/icons/";
-		int indexOfThis = this.toggleFunction.indexOf("this");
-		if (indexOfThis > -1) {
-			sb.insert(indexOfThis	+ 4,
-						", '" + iconPath + "expand_less.png'" + ", '" + iconPath + "expand_more.png'");
-		}
-		return sb.toString();
+		return this.toggleFunction;
 	}
 
 	String buildLink(NavigationTreeNode node) {

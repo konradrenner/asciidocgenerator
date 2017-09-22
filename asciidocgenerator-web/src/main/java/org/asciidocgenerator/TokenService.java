@@ -33,25 +33,22 @@ import javax.persistence.PostLoad;
  * @author Konrad Renner
  */
 @ApplicationScoped
-public class BaseDirectoryService {
+public class TokenService {
 
-	@Resource(lookup = "java:global/htmldirectory")
-	private String baseDirectory;
+	@Resource(lookup = "java:global/gitlabtoken")
+	private String gitlabtoken;
 
-	private String correctDir;
+	private String correctToken;
 
 	@PostLoad
 	void init() {
-		correctDir = System.getProperty("asciidocgenerator.baseDirectory");
-		if (correctDir == null) {
-			correctDir = baseDirectory;
-			if (correctDir.startsWith("~")) {
-				correctDir = correctDir.replace("~", System.getProperty("user.home"));
-			}
+		correctToken = System.getProperty("asciidocgenerator.token");
+		if (correctToken == null) {
+			correctToken = gitlabtoken;
 		}
 	}
 
-	public String getBaseDirectory() {
-		return correctDir;
+	public String getToken() {
+		return correctToken;
 	}
 }

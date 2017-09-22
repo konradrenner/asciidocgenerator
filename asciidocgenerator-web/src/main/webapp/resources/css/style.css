@@ -143,9 +143,8 @@ body {
 
 
 #gruppenAuswahlButton{
-	cursor: pointer;
-	position: relative;
-	bottom: 6px;
+    cursor: pointer;
+    margin: 7px 10px;
 }
 
 #mainNavigationActions a{

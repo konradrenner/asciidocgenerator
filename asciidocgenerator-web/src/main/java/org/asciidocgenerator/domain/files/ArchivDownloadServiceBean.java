@@ -11,26 +11,24 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-
 import org.asciidocgenerator.DokuGeneratorException;
+import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
 import org.asciidocgenerator.FilesDownloadedEvent;
 import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent;
-import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
+import org.asciidocgenerator.TokenService;
 
 @Stateless
 @Logged
 public class ArchivDownloadServiceBean {
 
-	@Resource(lookup = "java:global/gitlabtoken")
-	private String token;
+	@Inject
+	private TokenService token;
 
 	@Inject
 	private ExtractArchiveService extractService;
@@ -47,14 +45,13 @@ public class ArchivDownloadServiceBean {
 
 			download(downloadURL, tempFile);
 
-			Path destinationFolder = extractService.extract(tempFile,
-															event.getProjectName());
+			Path destinationFolder = extractService.extract(tempFile, event.getProjectName());
 
 			Files.delete(tempFile);
 			downloadedEvent.fire(new FilesDownloadedEvent(	event.getRepositoryName(),
 															event.getProjectName(),
 															destinationFolder,
-			                     							event.getUrl().toString(),
+															event.getUrl().toString(),
 															removeWebhookPrefix(event.getReference())));
 		} catch (IOException e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "unable to download project", e);
@@ -63,7 +60,7 @@ public class ArchivDownloadServiceBean {
 	}
 
 	private void download(URL downloadURL, Path tempFile) throws IOException {
-		try (	ReadableByteChannel source = Channels.newChannel(downloadURL.openStream());
+		try (ReadableByteChannel source = Channels.newChannel(downloadURL.openStream());
 				FileChannel destination = FileChannel.open(	tempFile,
 															StandardOpenOption.WRITE,
 															StandardOpenOption.TRUNCATE_EXISTING)) {
@@ -75,7 +72,7 @@ public class ArchivDownloadServiceBean {
 	private URL buildDownloadURL(URL base, String ref) {
 		StringBuilder newUrl = new StringBuilder(base.toString());
 		newUrl.append("/repository/archive.zip?private_token=");
-		newUrl.append(token);
+		newUrl.append(token.getToken());
 		newUrl.append("&ref=");
 		newUrl.append(removeWebhookPrefix(ref));
 		try {

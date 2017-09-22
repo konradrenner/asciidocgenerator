@@ -15,9 +15,8 @@
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/coderay.css" />" />
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/roboto.css" />" />
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min-4.7.0.css" />" />
-	<link rel="stylesheet" href="/resources/css/github.min.css">
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.min.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/resources/js/navigation.js" />"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.min.js" />"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/navigation.js" />"></script>
 </head>
 
 <body onclick="DropDown.close();">

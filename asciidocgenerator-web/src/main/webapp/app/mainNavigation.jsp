@@ -10,16 +10,10 @@
 <fmt:setBundle basename="org.asciidocgenerator.ui.messages.messages" />
 
 <div class="mainNavigation">
-	<ul>
-		<li>
-			<ul>
-				<li>
-					<span id="gruppenAuswahlButton" class="icon" onclick="DropDown.toggle(event);"></span>
-				</li>
-			</ul>
-		</li>
-		<li>
-			<ul>
+    <span id="gruppenAuswahlButton" class="icon" onclick="DropDown.toggle(event);"></span>
+    <ul>
+            <li>
+                <ul>
 				<li>
 					<ul>
 					  	<c:out value="${UIService.groupName}" />

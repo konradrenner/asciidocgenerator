@@ -12,7 +12,7 @@ swarm:
             java:global/defaultGroupName:
                 binding-type: simple
                 type: java.lang.String
-                value: Doku-Plattform
+                value: Asciidoc-Plattform
     datasources:
         data-sources:
             GeneratorDS:

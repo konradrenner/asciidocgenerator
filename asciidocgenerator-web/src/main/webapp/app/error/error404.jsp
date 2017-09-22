@@ -8,8 +8,9 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EA210 Doku Plattform</title>
-	<link type="text/css" rel="stylesheet"	href="<c:url value="/resources/css/style.css" />" />
+        <title>EA210 Doku Plattform</title>
+        <base id="baseContext" href="<c:url value=""/>" target="_self" />
+        <link type="text/css" rel="stylesheet"	href="<c:url value="/resources/css/style.css" />" />
 	<link type="text/css" rel="stylesheet"	href="<c:url value="/resources/css/error.css" />" />
 	<link type="text/css" rel="stylesheet"	href="<c:url value="/resources/css/roboto.css" />" />
 	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min-4.7.0.css" />" />

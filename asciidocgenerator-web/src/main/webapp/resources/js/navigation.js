@@ -20,14 +20,9 @@ var SideNavigation =
 	    menuItem.classList.remove('activeMenuElement');
 	    return toggled;
     },
-    changeIcon : function(toggler, iconA, iconB, toggled) {
-	    toggler.firstChild.setAttribute('src', (toggled) ? iconA : iconB);
-    },
-    handleClick : function(toggler, iconA, iconB) {
+            handleClick: function (toggler) {
 	    this.toggleMenu(toggler);
-	    var toggled = toggler.classList.contains('toggled');
-	    this.changeIcon(toggler, iconA, iconB, toggled);
-    },
+            },
     expandSideNavigation : function() {
 	    var path = window.location.pathname.split("/").slice(4).join("/");
 	    var toggler = document.querySelectorAll(" .nottoggled");
@@ -66,9 +61,7 @@ var SideNavigation =
 	    var notToggledElements = document.querySelectorAll('.hoverable.nottoggled');
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
-		      notToggledElements[i],
-                            BaseContext.get() + '/resources/icons/expand_less.png',
-                            BaseContext.get() + '/resources/icons/expand_more.png');
+                            notToggledElements[i]);
 	    }
     },
 
@@ -80,9 +73,7 @@ var SideNavigation =
 	    var notToggledElements = document.querySelectorAll('.hoverable.toggled');
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
-		      notToggledElements[i],
-                            BaseContext.get() + '/resources/icons/expand_less.png',
-                            BaseContext.get() + '/resources/icons/expand_more.png');
+                            notToggledElements[i]);
 	    }
     }
   };

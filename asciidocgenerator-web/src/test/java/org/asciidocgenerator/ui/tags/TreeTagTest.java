@@ -1,6 +1,5 @@
 package org.asciidocgenerator.ui.tags;
 
-import java.io.File;
 import org.asciidocgenerator.domain.navigation.NavigationTree;
 import org.asciidocgenerator.domain.navigation.NavigationTreeNode;
 import static org.junit.Assert.assertEquals;
@@ -35,7 +34,6 @@ public class TreeTagTest {
 		underTest.setNavigationPrefix(PREFIX);
 	}
 
-
 	@SuppressWarnings("boxing")
 	@Test
 	public void testBuildingLinkWhenArticleAttached() {
@@ -43,7 +41,7 @@ public class TreeTagTest {
 		when(node.getNavigationPath()).thenReturn(PATH);
 		when(node.getName()).thenReturn(NAME);
 		when(node.articlesAttached()).thenReturn(true);
-		
+
 		String expected = String.format("<a class=\"hoverable\" href=\"%s%s%s\" >%s</a>", CTXPATH, PREFIX, PATH, NAME);
 		String actual = underTest.buildLink(node);
 		assertEquals(expected, actual);
@@ -64,10 +62,7 @@ public class TreeTagTest {
 
 	@Test
 	public void testBuildingJavascript() {
-		String expected =
-						String.format(	"toggle(this, '%s/resources/icons/expand_less.png', '%s/resources/icons/expand_more.png')",
-										CTXPATH,
-										CTXPATH);
+		String expected = "toggle(this)";
 
 		String actual = underTest.buildJavascript();
 		assertEquals(expected, actual);
@@ -92,7 +87,6 @@ public class TreeTagTest {
 		String actual = underTest.createFolderEndTag();
 		assertEquals(expected, actual);
 	}
-
 
 	@SuppressWarnings("boxing")
 	@Test
@@ -125,7 +119,7 @@ public class TreeTagTest {
 
 		assertEquals(expected, actual);
 	}
-	
+
 	@Test
 	public void testBuildPlaceholderForLayout() {
 		assertEquals(buildPlaceholderForLayout(), underTest.buildPlaceholderForLayout());
@@ -138,16 +132,10 @@ public class TreeTagTest {
 	}
 
 	String buildToggleItem() {
-            return String.format("<span class=\"hoverable nottoggled toggleIcon\" onclick=\"toggle(this, '%s/resources/icons/expand_less.png', '%s/resources/icons/expand_more.png')\" ><img src=\"%s/resources%sicons%sexpand_more.png\" /></span>",
-            								CTXPATH,
-								CTXPATH,
-								CTXPATH,
-								File.separator,
-								File.separator);
+		return "<span class=\"hoverable nottoggled toggleIcon\" onclick=\"toggle(this)\" ></span>";
 	}
 
 	String buildPlaceholderForLayout() {
 		return "<span class=\"hiddenSpan\">+</span>";
 	}
 }
-
