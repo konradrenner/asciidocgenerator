@@ -1,4 +1,5 @@
 :navigation: asciidocgenerator/User Docs/Readme
+:toc:
 
 = asciidocgenerator
 
