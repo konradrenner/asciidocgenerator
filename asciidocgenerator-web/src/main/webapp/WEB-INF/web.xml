@@ -45,5 +45,21 @@
             <url-pattern>/admin/*</url-pattern>
         </filter-mapping>
 	
+        <security-constraint>
+            <web-resource-collection>
+                <web-resource-name>asciidocgenerator</web-resource-name>
+                <url-pattern>/admin/*</url-pattern>
+            </web-resource-collection>
+            <auth-constraint>
+                <role-name>admin</role-name>
+            </auth-constraint>
+        </security-constraint>
+        <login-config>
+            <auth-method>KEYCLOAK</auth-method>
+            <realm-name>this is ignored currently</realm-name>
+        </login-config>
+        <security-role>
+            <role-name>admin</role-name>
+        </security-role>
 </web-app>
 
