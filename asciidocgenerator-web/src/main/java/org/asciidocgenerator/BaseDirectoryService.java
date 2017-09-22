@@ -23,9 +23,9 @@
  */
 package org.asciidocgenerator;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.PostLoad;
 
 /**
  * This service is just necessary to support the linux home shortcut ~
@@ -40,7 +40,7 @@ public class BaseDirectoryService {
 
 	private String correctDir;
 
-	@PostLoad
+	@PostConstruct
 	void init() {
 		correctDir = System.getProperty("asciidocgenerator.baseDirectory");
 		if (correctDir == null) {

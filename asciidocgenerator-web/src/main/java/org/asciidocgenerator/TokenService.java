@@ -23,9 +23,9 @@
  */
 package org.asciidocgenerator;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.PostLoad;
 
 /**
  * This service is just necessary to support the linux home shortcut ~
@@ -40,7 +40,7 @@ public class TokenService {
 
 	private String correctToken;
 
-	@PostLoad
+	@PostConstruct
 	void init() {
 		correctToken = System.getProperty("asciidocgenerator.token");
 		if (correctToken == null) {

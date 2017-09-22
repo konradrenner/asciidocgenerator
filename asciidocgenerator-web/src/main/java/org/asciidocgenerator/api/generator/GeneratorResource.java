@@ -1,9 +1,9 @@
 package org.asciidocgenerator.api.generator;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -12,11 +12,9 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-
-import org.asciidocgenerator.DokuGeneratorException;
+import org.asciidocgenerator.FilesDownloadedEvent;
 import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent;
-import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent.ObjectKind;
 
 @Path("generator")
@@ -25,6 +23,29 @@ public class GeneratorResource {
 
 	@Inject
 	private Event<PushToRepositoryOccuredEvent> pushEvent;
+
+	@Inject
+	private Event<FilesDownloadedEvent> downloadedEvent;
+
+	@Path("generatelocalFiles")
+	@POST
+	@Consumes("application/json")
+	public Response generateLocalFiles(JsonObject object) {
+		try {
+			String name = object.getString("name");
+			String path = object.getString("localPath");
+			String version = object.getString("version");
+
+			FilesDownloadedEvent event = new FilesDownloadedEvent("Local", name, Paths.get(path), "localhost", version);
+
+			downloadedEvent.fire(event);
+
+		} catch (Exception e) {
+			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "problem processing event", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().build();
+	}
 
 	@Path("gitlabtagpushed")
 	@POST
@@ -47,12 +68,12 @@ public class GeneratorResource {
 																				.url(new URL(url))
 																				.reference(reference)
 																				.objectKind(objectKind)
-										.build();
+																				.build();
 
 			pushEvent.fire(event);
 		} catch (Exception e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "problem processing event", e);
-			throw new DokuGeneratorException(ErrorCode.MALFORMED_GITLAB_JSON);
+			return Response.serverError().build();
 		}
 		return Response.ok().build();
 	}
