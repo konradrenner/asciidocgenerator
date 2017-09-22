@@ -1,7 +1,6 @@
 package org.asciidocgenerator.ui;
 
 import java.io.IOException;
-
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.servlet.Filter;
@@ -11,10 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 import org.asciidocgenerator.DokuGeneratorException;
-import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
+import org.asciidocgenerator.Logged;
 
 @Logged
 public class NavigationStateFilter
@@ -44,7 +43,11 @@ public class NavigationStateFilter
 
 		NavigationSelectedEvent selectedEvent = navigationPathService.createNavigationSelectedEvent();
 
-		event.fire(selectedEvent);
+		try {
+			event.fire(selectedEvent);
+		} catch (DokuGeneratorException e) {
+			((HttpServletResponse) response).sendError(404);
+		}
 
 		chain.doFilter(request, response);
 	}

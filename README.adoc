@@ -1,0 +1,65 @@
+:navigation: asciidocgenerator/User Docs/Readme
+
+= asciidocgenerator
+
+asciidocgenerator is a webapplication which can convert and publish asciidoc files in html and pdf. This application also provides integratoin for GitLab webhooks.
+
+== Building
+
+Just clone this repository, go into the asciidocgenerator-web folder and type "mvn package".
+After the build has completed, you will find a *.war file and a *.jar file in the target folder.
+
+== Running
+
+The *.war file should be deployable on every Java EE 7 Web-Profile compliant app server. The asciidoctorj libs must be available in the system classloader of the appserver!
+
+But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), just with "java -jar". This will boot a Wildfly Swarm instance with everything needed. If you start the app the first time, you have to create a realm in the provided Keycloak instance.
+
+=== Initial Keycloak setup
+
+Before the first start, just open "[URL]:[PORT]/auth" (e.g. localhost:8080/auth) in a browser. First you have to create a Keycloak admin user. After this, create a new realm like described here: https://dzone.com/articles/securing-wildfly-swarm-apps-with-keycloak
+
+The Realm name and resource has to be "asciidocgenerator". If you use this convention, the keycloak.json must not be changed. Users which should be able to open the settings of the asciidocgenerator app must have the role "admin".
+
+=== Properties
+
+The following table displays properties which can be set at application start via the -D argument, if the defaults do not fit:
+
+[cols="3*", options="header"] 
+|===
+|Property
+|Default
+|Description
+
+|asciidocgenerator.token
+|none
+|Token for authentication at a GitLab server
+
+|asciidocgenerator.baseDirectory
+|~/.asciidocgenerator/files
+|Location of generated files
+|===
+
+== Using
+
+The only thing you need to define in your asciidoc files, so that they will be converted and published, is the :navigation: header field. The value after the :navigation: field must be in the following form "groupname/mainnavigation/sidenavigation".
+
+*Example:* _:navigation:Group/Example/Simple adoc_
+
+*Example if you want a folder in the sidenavigation:* _:navigation:Group/Example/Folder/Nav Point_
+
+asciidocgenerator also comes with the asciidoctor-diagram plugin, so it is possible to also define diagrams in your asciidoc files (e.g. plantuml) and the app will render it. If you want asciidocgenerator to render also diagrams, graphviz must be installed on the system.
+
+=== The user interface
+
+The user interface consists of the main navigation, the side navigation and the asciidoc content. The left part of the main navigation displays the "group", right from the seperator there is the navigation part and the right part of the main navigation are action buttons (e.g. generate pdf). Every entry, except the action buttons, is configured via the :navigation: header field of the asciidoc-document.
+
+image::images/screen.png[]
+
+=== GitLab integration
+
+The asciidocgenerator webapp provides integration for GitLab webhooks. You just have to provide the asciidocgenerator.token-Property and configure a webhook for the "Tag Push Hook". The webhook must be configured to send a POST Request to the following URL: _http://[URL]:[PORT]/api/v1/generator/gitlabtagpushed_
+
+=== Generating local files
+
+It is also possible to generate html and pdf files from adoc files which are stored on the local file system. Just have a look at the _"localfolder_generation_template.json"_ and _"webhook_post.sh"_ files to get an idea how to convert and publish local files.

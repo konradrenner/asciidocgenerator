@@ -4,7 +4,7 @@ swarm:
             java:global/gitlabtoken:
                 binding-type: simple
                 type: java.lang.String
-                value: aaa
+                value: none
             java:global/htmldirectory:
                 binding-type: simple
                 type: java.lang.String

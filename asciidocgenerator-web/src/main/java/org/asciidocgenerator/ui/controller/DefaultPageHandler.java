@@ -1,12 +1,10 @@
 package org.asciidocgenerator.ui.controller;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.asciidocgenerator.DokuGeneratorException;
 import org.asciidocgenerator.ui.PageService;
 
@@ -30,9 +28,7 @@ public class DefaultPageHandler {
 			RequestDispatcher rd = req.getRequestDispatcher("/app/layout.jsp");
 			rd.forward(req, resp);
 		} catch (DokuGeneratorException e) {
-			RequestDispatcher rd = req.getRequestDispatcher("/app/error/error.jsp");
-			resp.sendError(500);
-			rd.forward(req, resp);
+			resp.sendError(404);
 		}
 	}
 }
