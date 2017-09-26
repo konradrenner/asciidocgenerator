@@ -12,19 +12,19 @@ After the build has completed, you will find a *.war file and a *.jar file in th
 
 == Running
 
-The *.war file should be deployable on every Java EE 7 Web-Profile compliant app server. The asciidoctorj libs must be available in the system classloader of the appserver!
+The *.war file should be deployable on every Java EE 7 Web-Profile compliant app server (look into the link:https://github.com/konradrenner/asciidocgenerator/blob/master/asciidocgenerator-web/src/main/resources/project-defaults.yml[project-defaults.yml] file for required configurations of the server). Be aware that the link:https://github.com/asciidoctor/asciidoctorj[asciidoctorj] libs must be available in the system classloader of the appserver!
 
-But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), just with "java -jar". This will boot a Wildfly Swarm instance with everything needed. If you start the app the first time, you have to create a realm in the provided Keycloak instance.
+But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), just with "java -jar" command. This will boot a Wildfly Swarm instance with everything needed. If you start the app the first time, you have to create a realm in the provided Keycloak instance.
 
 === Initial Keycloak setup
 
 Before the first start, just open "[URL]:[PORT]/auth" (e.g. localhost:8080/auth) in a browser. First you have to create a Keycloak admin user. After this, create a new realm like described here: https://dzone.com/articles/securing-wildfly-swarm-apps-with-keycloak
 
-The Realm name and resource has to be "asciidocgenerator". If you use this convention, the keycloak.json must not be changed. Users which should be able to open the settings of the asciidocgenerator app must have the role "admin".
+The Realm name and resource has to be "asciidocgenerator". If you use this convention, the existing keycloak.json must not be changed. Users which should be able to open the settings of the asciidocgenerator app must have the role "admin".
 
 === Properties
 
-The following table displays properties which can be set at application start via the -D argument, if the defaults do not fit:
+The following table displays properties which can be set at application start (if you want to overrule the defaults) via the -D argument:
 
 [cols="3*", options="header"] 
 |===
@@ -53,11 +53,11 @@ If you want to attach one or more tags to an article, just include the :keywords
 
 *Example:* _:keywords: work, very important_
 
-asciidocgenerator also comes with the asciidoctor-diagram plugin, so it is possible to also define diagrams in your asciidoc files (e.g. plantuml) and the app will render it. If you want asciidocgenerator to render also diagrams, graphviz must be installed on the system.
+asciidocgenerator also comes with the asciidoctorj-diagram plugin, so it is possible to also define diagrams in your asciidoc files (e.g. plantuml) and the app will render it. Be aware that if you want asciidocgenerator to render also diagrams, graphviz must be installed on the system.
 
 === The user interface
 
-The user interface consists of the main navigation, the side navigation and the asciidoc content. The left part of the main navigation displays the "group", right from the seperator there is the navigation part and the right part of the main navigation are action buttons (e.g. generate pdf). Every entry, except the action buttons, is configured via the :navigation: header field of the asciidoc-document.
+The user interface consists of the main navigation, the side navigation and the asciidoc content. The left part of the main navigation displays the "group", right from the seperator there is the navigation part and the right part of the main navigation are action buttons (article details, generate pdf, tags, settings). Every entry, except the action buttons, is configured via the :navigation: header field of the asciidoc-document.
 
 image::images/screen.png[]
 
