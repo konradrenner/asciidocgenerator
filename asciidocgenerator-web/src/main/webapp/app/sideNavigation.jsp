@@ -8,13 +8,6 @@
 <fmt:setBundle
 	basename="org.asciidocgenerator.ui.messages.messages" />
 <div id="sideNavigation">
-<!-- 
-	<ul id="sideNavigationActions">
-		<li onclick="SideNavigation.unfoldAll()"><fmt:message
-				key="label_unfold_all" /></li>
-		<li onclick="SideNavigation.foldAll()"><fmt:message
-				key="label_fold_all" /></li>
-	</ul> -->
 	<span id="sideNavigationAllSelector" class="allSelectorNottoggled toggleIcon" onClick="SideNavigation.unfoldAll(this)"><fmt:message key="label_sidenavigation_allEntries" /></span>
 	
 	

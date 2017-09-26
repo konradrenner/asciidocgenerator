@@ -61,14 +61,6 @@ public class TreeTagTest {
 	}
 
 	@Test
-	public void testBuildingJavascript() {
-		String expected = "toggle(this)";
-
-		String actual = underTest.buildJavascript();
-		assertEquals(expected, actual);
-	}
-
-	@Test
 	public void testBuildinOfPlaceholderForLayout() {
 		String expected = "<span class=\"hiddenSpan\">+</span>";
 		assertEquals(expected, underTest.buildPlaceholderForLayout());

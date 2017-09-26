@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-
 import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.domain.content.Article;
 import org.asciidocgenerator.domain.content.ContentRepository;
@@ -20,6 +20,8 @@ import org.asciidocgenerator.domain.navigation.NavigationRepository;
 @Singleton
 @Logged
 public class ReorganisationService {
+
+	private Logger LOG = Logger.getLogger("asciidocgenerator-web");
 
 	@Inject
 	private ContentRepository contentRepo;
@@ -31,7 +33,10 @@ public class ReorganisationService {
 	public void removeNonExistingData() {
 		Set<Article> articlesWithNotExistingFiles = evaluateArticlesWithNotExistingFiles();
 
+		LOG.log(Level.INFO, "Articles without files:{0}", articlesWithNotExistingFiles);
+
 		Set<MainNavigation> mainNavsForUpdate = deleteArticles(articlesWithNotExistingFiles);
+		LOG.log(Level.INFO, "MainNavigations for update:{0}", mainNavsForUpdate);
 		updateMainNavigations(mainNavsForUpdate);
 		deleteGroups();
 	}

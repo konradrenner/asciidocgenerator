@@ -85,12 +85,9 @@ public class TreeTag
 	}
 
 	String createNodeTag(NavigationTreeNode node) {
-		StringBuilder sb = new StringBuilder("<li id='");
-		sb.append(node.getNavigationPath());
-		sb.append("' >");
-		sb.append(buildDescriptorForLayout(node, this::buildPlaceholderForLayout));
-		sb.append("</li>");
-		return sb.toString();
+		return String.format(	"<li id=\"%s\">%s</li>",
+								node.getNavigationPath(),
+								buildDescriptorForLayout(node, this::buildPlaceholderForLayout));
 	}
 
 	String buildDescriptorForLayout(NavigationTreeNode node, Supplier<String> function) {
@@ -98,33 +95,21 @@ public class TreeTag
 	}
 
 	String buildToggleItem() {
-		return "<span class=\"hoverable nottoggled toggleIcon\" onclick=\"" + buildJavascript() + "\" >" + "</span>";
+		return String.format(	"<span class=\"hoverable nottoggled toggleIcon\" onclick=\"%s\" ></span>",
+								this.toggleFunction);
 	}
 
 	String buildPlaceholderForLayout() {
 		return "<span class=\"hiddenSpan\">+</span>";
 	}
 
-	String buildJavascript() {
-		return this.toggleFunction;
-	}
-
 	String buildLink(NavigationTreeNode node) {
-		StringBuilder sb;
 		if (node.articlesAttached()) {
-			sb = new StringBuilder("<a class=\"hoverable\" href=\"");
-			sb.append(this.contextPath);
-			sb.append(navigationPrefix);
-			sb.append(node.getNavigationPath());
-			sb.append("\" >");
-			sb.append(node.getName());
-			sb.append("</a>");
-		} else {
-			sb = new StringBuilder("<span class=\"noArticlesAttached\" >");
-			sb.append(node.getName());
-			sb.append("</span>");
+			return String.format(	"<a class=\"hoverable\" href=\"%s\" >%s</a>",
+									this.contextPath + navigationPrefix + node.getNavigationPath(),
+									node.getName());
 		}
+		return String.format("<span class=\"noArticlesAttached\" >%s</span>", node.getName());
 
-		return sb.toString();
 	}
 }

@@ -64,92 +64,68 @@ body {
 	top: 10px;
 }
 
-.mainNavigation li.iconhidden {
-	display: none;
-}
 
-.mainNavigation {
-    background-color: #036fab; 
+#mainNavigation {
+	top: 0px;
 	position: fixed;
-	margin: 0 auto;
+	height: 60px;
 	width: 100%;
-	display: inline-flex;
+	background-color: #036fab;
 	opacity: 0.85;
 	z-index: 10;
-	padding: 10px 10px;
-	top: 0;
-	height: 60px;
 	-webkit-box-shadow: 0px -4px 40px 1px rgba(0, 0, 0, 0.75);
 	-moz-box-shadow: 0px -4px 40px 1px rgba(0, 0, 0, 0.75);
 	box-shadow: 0px -4px 40px 1px rgba(0, 0, 0, 0.75);
 }
 
-
-.mainNavigation li, .mainNavigation li.link {
-	padding: 14px 5px;
-        color: white; 
-}
-
-.mainNavigation li.link:hover, .mainNavigation li.selectedMenuItem {
-	border-bottom: 4px solid white;
-}
-
-.mainNavigation>ul {
+.navigationList{
+	list-style:none;
 	display: flex;
-	width: 100%;
-	padding: 6px;
-	top: 0px;
+	color: white;
 }
 
-.mainNavigation li, .mainNavigation ul, .mainNavigation a {
-	margin: 0 auto;
-	display: inline;
+#navigationLinks{
+	margin: 15px 5px;
+	float:left;
+}
+#navigationLinks>li{
+	padding: 5px 5px;
 }
 
-#mainNavigationActions {
-	margin: 0px 15px;
+#navigationLinks>li:first-child {
+	padding: 5px 20px 5px 0px;
+	border-right: 2px solid white;
 }
 
-#mainNavigationActions > li {
+#navigationLinks a{
+	padding: 5px 15px;
+	color: white;
+	text-decoration: none;
+}
+
+#navigationLinks li a:hover{
+    padding: 5px 15px;
+    border-bottom: 4px solid white;
+}
+
+#navigationActions{
+	float:right;
+	margin: 5px 15px;
+}
+#navigationActions>li{
+	padding: 5px 5px;
 	margin: 0px 5px;
 }
-
-#mainNavigationItem {
-	padding: 2px 20px;
-	margin: 0px 15px;
-	border-left: 2px solid white;
+#navigationActions>li.iconhidden{
+	display: none;
 }
 
-#mainNavigationItem a:link, #mainNavigationItem a:visited, #mainNavigationItem a {
-	padding: 10px;
-	color: white;
-	font-size: 13pt;
-	text-decoration: none;
-	outline: none;
-}
-
-#mainNavigationItem a:hover {
-    color: white;
-}
-
-.mainNavigation>ul>li:last-child {
-	float: right;
-	top: 0;
-	margin-left: auto;
-	padding: 14px 0 0 0;
-	position: fixed;
-	right: 0;
-}
 
 
 #gruppenAuswahlButton{
-    cursor: pointer;
-    margin: 7px 10px;
-}
-
-#mainNavigationActions a{
-	position: relative;
-	bottom: 6px;
+	float: left;
+	cursor: pointer;
+	margin: 19px 15px;
 }
 
 #webContent {
@@ -234,6 +210,9 @@ body {
 	padding-bottom: 0px;
 }
 
+.toggleIcon{
+	cursor: pointer;
+}
 .toggleIcon:before{
 	font-family: 'FontAwesome';
 	font-style: normal;
@@ -341,9 +320,6 @@ body {
 	opacity: .8;
 }
 
-#mainNavi li {
-	padding: 20px;
-}
 
 #sideNavigation span.hoverable:hover, #sideNavigation a.hoverable:hover {
 	transition: .2s;

@@ -9,38 +9,25 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="org.asciidocgenerator.ui.messages.messages" />
 
-<div class="mainNavigation">
-    <span id="gruppenAuswahlButton" class="icon" onclick="DropDown.toggle(event);"></span>
-    <ul>
-            <li>
-                <ul>
-				<li>
-					<ul>
-					  	<c:out value="${UIService.groupName}" />
-					</ul>
-				</li>
-				<li>
-					<ul id="mainNavigationItem">
-						<c:forEach var="documentMainNavigationTab"
-							items="${mainNavigationService.documentNavigation}">
-							<li id="${documentMainNavigationTab.name}" class="link"><a
-								href="<c:url value="/navigation/${UIService.groupId}/${documentMainNavigationTab.name}" />"><c:out value="${documentMainNavigationTab.name}"/></a></li>
-						</c:forEach>
-					</ul>
-				</li>
-			</ul>
-		</li>
+<div id="mainNavigation">
+	<span id="gruppenAuswahlButton" class="icon" onclick="DropDown.toggle(event);"></span>
+	<ul id="navigationLinks" class="navigationList">
 		<li>
-			<ul id="mainNavigationActions">
-				<li class="iconhidden"><a onClick="Info.showModal()" id="detailsIcon" class="icon"></a></li>
-				<li class="iconhidden"><a href="<c:url value="/pdf/"/>"  target="_blank" id="pdf" class="icon"></a></li>
-				<li><a href="<c:url value="/categories/list"/>" id="categoriesIcon" class="icon"></a></li>
-				<li><a href="<c:url value="/admin/${UIService.groupId}/groups"/>" id="adminIcon" class="icon"></a></li>
-			</ul>
+			<c:out value="${UIService.groupName}" />
 		</li>
+		<c:forEach var="documentMainNavigationTab" items="${mainNavigationService.documentNavigation}">
+			<li id="${documentMainNavigationTab.name}">
+				<a	href="<c:url value="/navigation/${UIService.groupId}/${documentMainNavigationTab.name}" />"><c:out value="${documentMainNavigationTab.name}"/></a>
+			</li>
+		</c:forEach>
+	</ul>
+	<ul id="navigationActions" class="navigationList">
+		<li class="iconhidden"><a onClick="Info.showModal()" id="detailsIcon" class="icon"></a></li>
+		<li class="iconhidden"><a href="<c:url value="/pdf/"/>"  target="_blank" id="pdf" class="icon"></a></li>
+		<li><a href="<c:url value="/categories/list"/>" id="categoriesIcon" class="icon"></a></li>
+		<li><a href="<c:url value="/admin/${UIService.groupId}/groups"/>" id="adminIcon" class="icon"></a></li>
 	</ul>
 </div>
-
 	
 <div id="dropdown" class="dropdown-content">
 	<c:forEach var="navigationGroup" items="${mainNavigationService.navigationGroups}">

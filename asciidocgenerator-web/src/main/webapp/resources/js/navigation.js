@@ -20,9 +20,15 @@ var SideNavigation =
 	    menuItem.classList.remove('activeMenuElement');
 	    return toggled;
     },
-            handleClick: function (toggler) {
+    /*
+    changeIcon : function(toggler, iconA, iconB, toggled) {
+	    toggler.firstChild.setAttribute('src', (toggled) ? iconA : iconB);
+    },*/
+    handleClick : function(toggler, iconA, iconB) {
 	    this.toggleMenu(toggler);
-            },
+	    //var toggled = toggler.classList.contains('toggled');
+	    //this.changeIcon(toggler, iconA, iconB, toggled);
+    },
     expandSideNavigation : function() {
 	    var path = window.location.pathname.split("/").slice(4).join("/");
 	    var toggler = document.querySelectorAll(" .nottoggled");
@@ -61,19 +67,18 @@ var SideNavigation =
 	    var notToggledElements = document.querySelectorAll('.hoverable.nottoggled');
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
-                            notToggledElements[i]);
+		      notToggledElements[i]);
 	    }
     },
 
-            foldAll: function (toggler) {
-
+    foldAll : function(toggler) {
 	    toggler.setAttribute('onClick', 'SideNavigation.unfoldAll(this)')
 	    toggler.classList.remove('allSelectorToggled');
 	    toggler.classList.add('allSelectorNottoggled');
 	    var notToggledElements = document.querySelectorAll('.hoverable.toggled');
 	    for (var i = 0; i < notToggledElements.length; i++) {
 		    SideNavigation.handleClick(
-                            notToggledElements[i]);
+		      notToggledElements[i]);
 	    }
     }
   };
@@ -101,7 +106,7 @@ var MainNavigation = {
 
   decodeGroupName : function(toggler, content) {
 	  toggler.innerHTML = decodeURI(content);
-    }
+  }
 }
 
 var NavigationGroup = {
@@ -136,7 +141,7 @@ var Category = {
 	  }
 
 	  toggler.classList.add('categorieToggled');
-        $.get(BaseContext.get() + "/category?categoriename=" + categoryName, {}, function (result) {
+	  $.get(BaseContext.get()+"/category?categoriename=" + categoryName, {}, function(result) {
 		  $("#categoriesContent").html(result);
 		  document.getElementById('document').id = '';
 		  document.getElementById('articleList').id = '';
@@ -210,7 +215,7 @@ var DropDown = {
 };
 
 var BaseContext = {
-    get: function () {
-        return document.getElementById('baseContext').getAttribute("href");
-    }
-}
+	get:function(){
+		return $('#baseContext').attr('href');
+	}
+};

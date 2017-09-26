@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-wildfly-swarm:run debug</actionName>
+            <displayName>wildfly-swarm:run development</displayName>
+            <goals>
+                <goal>org.wildfly.swarm:wildfly-swarm-plugin:2017.9.4:run</goal>
+            </goals>
+            <properties>
+                <swarm.debug.port>8787</swarm.debug.port>
+            </properties>
+        </action>
+    </actions>

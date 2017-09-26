@@ -1,7 +1,9 @@
 package org.asciidocgenerator.api.generator;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.event.Event;
@@ -17,6 +19,7 @@ import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent.ObjectKind;
 
+@Api(value = "generator")
 @Path("generator")
 @Logged
 public class GeneratorResource {
@@ -30,13 +33,14 @@ public class GeneratorResource {
 	@Path("generatelocalFiles")
 	@POST
 	@Consumes("application/json")
-	public Response generateLocalFiles(JsonObject object) {
+	@ApiOperation(value = "Generates documentation from a local file source")
+	public Response generateLocalFiles(LocalFilePath pathToFolder) {
 		try {
-			String name = object.getString("name");
-			String path = object.getString("localPath");
-			String version = object.getString("version");
+			String name = pathToFolder.getName();
+			java.nio.file.Path path = pathToFolder.getPath();
+			String version = pathToFolder.getVersion();
 
-			FilesDownloadedEvent event = new FilesDownloadedEvent("Local", name, Paths.get(path), "localhost", version);
+			FilesDownloadedEvent event = new FilesDownloadedEvent("Local", name, path, "localhost", version);
 
 			downloadedEvent.fire(event);
 
@@ -50,7 +54,11 @@ public class GeneratorResource {
 	@Path("gitlabtagpushed")
 	@POST
 	@Consumes("application/json")
-	public Response gitlabTagPushed(@HeaderParam("X-Gitlab-Event") String gitlabEvent, JsonObject object) {
+	@ApiOperation(	value = "Accepts GitLab Tag Push Events, downloads and generates documentation with the information of the tag push event",
+					notes = "Please take a look at https://docs.gitlab.com/ce/user/project/integrations/webhooks.html for details of the GitLab JSON format")
+	public Response gitlabTagPushed(@ApiParam(	value = "Type of the GitLab Event",
+												required = true) @HeaderParam("X-Gitlab-Event") String gitlabEvent,
+									JsonObject object) {
 		if (isNotGitlabTagPushedEvent(gitlabEvent)) {
 			return Response.notModified().build();
 		}
