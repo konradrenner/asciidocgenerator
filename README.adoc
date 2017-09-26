@@ -45,9 +45,13 @@ The following table displays properties which can be set at application start vi
 
 The only thing you need to define in your asciidoc files, so that they will be converted and published, is the :navigation: header field. The value after the :navigation: field must be in the following form "groupname/mainnavigation/sidenavigation".
 
-*Example:* _:navigation:Group/Example/Simple adoc_
+*Example:* _:navigation: Group/Example/Simple adoc_
 
-*Example if you want a folder in the sidenavigation:* _:navigation:Group/Example/Folder/Nav Point_
+*Example if you want a folder in the sidenavigation:* _:navigation: Group/Example/Folder/Nav Point_
+
+If you want to attach one or more tags to an article, just include the :keywords: header field. The following example attaches two tags to the file ("work" and "very important").
+
+*Example: _:keywords: work, very important_
 
 asciidocgenerator also comes with the asciidoctor-diagram plugin, so it is possible to also define diagrams in your asciidoc files (e.g. plantuml) and the app will render it. If you want asciidocgenerator to render also diagrams, graphviz must be installed on the system.
 
