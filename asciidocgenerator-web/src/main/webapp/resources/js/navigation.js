@@ -29,24 +29,30 @@ var SideNavigation =
 	    //var toggled = toggler.classList.contains('toggled');
 	    //this.changeIcon(toggler, iconA, iconB, toggled);
     },
-    expandSideNavigation : function() {
-	    var path = window.location.pathname.split("/").slice(4).join("/");
-	    var toggler = document.querySelectorAll(" .nottoggled");
-	    var lastElement = toggler[0];
-	    if (path == '' || toggler.length == 0) {
-		    return;
-	    }
-	    for (var i = 0; i < toggler.length; i++) {
-		    var menuItemOfToggler = toggler[i].parentNode.parentNode;
-		    var id = menuItemOfToggler.id.split("/").slice(1).join("/").toLowerCase();
-		    path = path.toLowerCase();
-		    path = decodeURI(path);
-		    if (path.indexOf(id) !== -1) {
-			    toggler[i].click();
-			    lastElement = toggler[i];
-		    }
-	    }
-	    this.selectLinkByHref(lastElement);
+            expandSideNavigation: function () {
+                var fullPath = window.location.pathname;
+                var contextRoot = BaseContext.get();
+                var slices = 4;
+                if (contextRoot.length === 0) {
+                    slices--;
+                }
+                var path = fullPath.split("/").slice(slices).join("/");
+                var toggler = document.querySelectorAll(" .nottoggled");
+                var lastElement = toggler[0];
+                if (path == '' || toggler.length == 0) {
+                    return;
+                }
+                for (var i = 0; i < toggler.length; i++) {
+                    var menuItemOfToggler = toggler[i].parentNode.parentNode;
+                    var id = menuItemOfToggler.id.split("/").slice(1).join("/").toLowerCase();
+                    path = path.toLowerCase();
+                    path = decodeURI(path);
+                    if (path.indexOf(id) !== -1) {
+                        toggler[i].click();
+                        lastElement = toggler[i];
+                    }
+                }
+                this.selectLinkByHref(lastElement);
     },
     selectLinkByHref : function(lastElement) {
 	    var links = lastElement.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('A');
