@@ -4,10 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
-
 import org.asciidocgenerator.DokuGeneratorException;
-import org.asciidocgenerator.Trail;
 import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
+import org.asciidocgenerator.Trail;
 import org.asciidocgenerator.domain.navigation.NavigationTree;
 import org.asciidocgenerator.domain.navigation.NavigationTreeBuilder;
 import org.asciidocgenerator.domain.navigation.NavigationTreeNode;
@@ -65,17 +64,16 @@ public class UISideNavigationTree
 
 	// SucheNachKnotenInKindTeilbaum
 	private NavigableSet<UISideNavigationTreeNode> lookForNodeInChildSectionBeam(	Trail path,
-																				int currentLayer,
-																				NavigableSet<UISideNavigationTreeNode> nodeOfLayer,
+																					int currentLayer,
+																					NavigableSet<UISideNavigationTreeNode> nodeOfLayer,
 																					boolean articlesAttached) {
 		String pathForSearch = buildNavigationPathForSearch(currentLayer, path);
-		UISideNavigationTreeNode wantedNode = new UISideNavigationTreeNode(path.getFragments().get(currentLayer),
-																				pathForSearch,
-																				currentLayer,
+		UISideNavigationTreeNode wantedNode = new UISideNavigationTreeNode(	path.getFragments().get(currentLayer),
+																			pathForSearch,
+																			currentLayer,
 																			articlesAttached);
 		UISideNavigationTreeNode node = nodeOfLayer.ceiling(wantedNode);
-		NavigableSet<UISideNavigationTreeNode> nodeOfLayerBeneath = node.getChildsModifyable();
-		return nodeOfLayerBeneath;
+		return node.getChildsModifyable();
 	}
 
 	String buildNavigationPathForSearch(int layer, Trail path) {

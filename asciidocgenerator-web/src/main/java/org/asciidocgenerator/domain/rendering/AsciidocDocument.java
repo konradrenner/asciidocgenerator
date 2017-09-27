@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Attributes;
 import org.asciidoctor.AttributesBuilder;
@@ -74,7 +73,7 @@ public class AsciidocDocument {
 	private List<String> rawContent;
 	private ContentEditor editor;
 
-	public AsciidocDocument(Path sourceFile, Asciidoctor asciidoc) throws IOException {
+	public AsciidocDocument(Path sourceFile, Asciidoctor asciidoc) {
 		this.sourceFile = sourceFile;
 		this.asciidoc = asciidoc;
 		rawContent = new ArrayList<>();
@@ -88,7 +87,7 @@ public class AsciidocDocument {
 		try (Reader reader = new InputStreamReader(new FileInputStream(sourceFile.toFile()))) {
 			this.documentHeader = this.asciidoc.readDocumentHeader(reader);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.getLogger("asciidocgenerator-web").log(Level.WARNING, "couldn't load document header", e);
 		}
 		return this;
 	}
@@ -208,7 +207,7 @@ public class AsciidocDocument {
 				contentString = this.doku.contentAsString(this.doku.rawContent);
 			}
 
-			try (	Reader reader = new StringReader(contentString);
+			try (Reader reader = new StringReader(contentString);
 					Writer writer = new FileWriter(destinationFile.toFile())) {
 				convertTo(reader, writer, "html");
 			} catch (IOException e) {
@@ -228,8 +227,7 @@ public class AsciidocDocument {
 				doku.asciidoc.convertFile(documentToRender.toFile(), BACKEND.PDF.getOptions(getBaseDirForConvert()));
 			}
 
-			try (	InputStream in = Files.newInputStream(renderedDocument);
-					OutputStream out = stream;) {
+			try (InputStream in = Files.newInputStream(renderedDocument); OutputStream out = stream;) {
 				byte[] buffer = new byte[1024];
 				int count;
 				while ((count = in.read(buffer)) != -1) {

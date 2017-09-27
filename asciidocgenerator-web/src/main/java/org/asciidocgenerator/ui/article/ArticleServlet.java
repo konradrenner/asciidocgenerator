@@ -19,6 +19,7 @@ import org.asciidocgenerator.domain.content.Article;
 import org.asciidocgenerator.domain.content.ContentService;
 import org.asciidocgenerator.domain.rendering.RenderingPlaceHolder;
 import org.asciidocgenerator.ui.ArticleSelectedEvent;
+import org.asciidocgenerator.ui.HTMLErrorCodes;
 import org.asciidocgenerator.ui.NavigationPathPrefix;
 import org.asciidocgenerator.ui.PageService;
 import org.asciidocgenerator.ui.controller.DefaultPageHandler;
@@ -56,7 +57,7 @@ public class ArticleServlet
 
 		if (articles.isEmpty()) {
 			RequestDispatcher rq = req.getRequestDispatcher("/app/error/error404.jsp");
-			resp.sendError(404);
+			resp.sendError(HTMLErrorCodes.NOT_FOUND);
 			rq.forward(req, resp);
 		} else {
 			if (trail.getFullPath().endsWith(".html")) {
@@ -85,7 +86,7 @@ public class ArticleServlet
 			final String requestURI = req.getRequestURI();
 			resp.sendRedirect(requestURI + "/" + articles.get(0).getFilename());
 		} else {
-			new DefaultPageHandler(new MultipleArticlePageController(req, resp, articles)).doWork(req, resp);
+			new DefaultPageHandler(new MultipleArticlePageController(articles)).doWork(req, resp);
 		}
 	}
 
@@ -108,6 +109,6 @@ public class ArticleServlet
 				return;
 			}
 		}
-		resp.sendError(404);
+		resp.sendError(HTMLErrorCodes.NOT_FOUND);
 	}
 }

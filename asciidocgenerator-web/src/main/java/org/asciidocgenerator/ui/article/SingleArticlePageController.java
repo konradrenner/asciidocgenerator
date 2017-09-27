@@ -1,13 +1,12 @@
 package org.asciidocgenerator.ui.article;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.asciidocgenerator.domain.content.Article;
 import org.asciidocgenerator.domain.rendering.HtmlDocument;
+import org.asciidocgenerator.ui.HTMLErrorCodes;
 import org.asciidocgenerator.ui.PageService;
 import org.asciidocgenerator.ui.controller.ContentPage;
 import org.asciidocgenerator.ui.controller.PageController;
@@ -30,7 +29,7 @@ public class SingleArticlePageController
 	public void execute(PageService pageService) throws ServletException, IOException {
 		HtmlDocument html = new HtmlDocument(article.getKey().getAblagepfad());
 		if (!html.exists()) {
-			response.sendError(404);
+			response.sendError(HTMLErrorCodes.NOT_FOUND);
 			return;
 		}
 

@@ -1,6 +1,6 @@
 package org.asciidocgenerator.ui.controller;
 
-public class ContentPage {
+public final class ContentPage {
 
 	private String relContentPagePath;
 	private String content;
@@ -22,7 +22,7 @@ public class ContentPage {
 		return new Builder(relContentPagePath);
 	}
 
-	public static class Builder {
+	public static final class Builder {
 
 		private ContentPage page;
 

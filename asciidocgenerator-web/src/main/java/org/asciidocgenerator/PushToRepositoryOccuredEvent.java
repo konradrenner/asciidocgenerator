@@ -2,7 +2,7 @@ package org.asciidocgenerator;
 
 import java.net.URL;
 
-public class PushToRepositoryOccuredEvent {
+public final class PushToRepositoryOccuredEvent {
 
 	public enum ObjectKind {
 							TAG_PUSH,
@@ -87,7 +87,8 @@ public class PushToRepositoryOccuredEvent {
 		PushToRepositoryOccuredEvent build();
 	}
 
-	public static class Builder
+	@SuppressWarnings("synthetic-access")
+	public static final class Builder
 			implements WithObjectKind, WithProjectName, WithReference, WithRepositoryName, WithURL, Finish {
 
 		private final PushToRepositoryOccuredEvent event;
@@ -103,35 +104,30 @@ public class PushToRepositoryOccuredEvent {
 		}
 
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public WithReference url(URL value) {
 			event.url = value;
 			return this;
 		}
 
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public WithProjectName repositoryName(String value) {
 			event.repositoryName = value;
 			return this;
 		}
 
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public WithObjectKind reference(String value) {
 			event.reference = value;
 			return this;
 		}
 
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public WithURL projectName(String value) {
 			event.projectName = value;
 			return this;
 		}
 
 		@Override
-		@SuppressWarnings("synthetic-access")
 		public Finish objectKind(ObjectKind value) {
 			event.objectKind = value;
 			return this;

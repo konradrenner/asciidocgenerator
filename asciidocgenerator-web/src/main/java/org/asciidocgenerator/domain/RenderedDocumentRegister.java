@@ -1,7 +1,5 @@
 package org.asciidocgenerator.domain;
 
-import org.asciidocgenerator.DocumentsRenderedEvent;
-
 public interface RenderedDocumentRegister {
 
 	AbstractRenderedDocumentBuilder.WithTitle<? extends RenderedDocument> newRenderedDocument();

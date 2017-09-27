@@ -1,11 +1,13 @@
 package org.asciidocgenerator.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class MetaInformation {
+public class MetaInformation
+		implements Serializable {
 
 	@NotNull
 	@Column
@@ -78,7 +80,7 @@ public class MetaInformation {
 		MetaInformation build();
 	}
 
-	public static class Builder
+	public static final class Builder
 			implements WithProjektname, WithRepositoryname, WithVcsurl, WithVcsversion, Finish {
 
 		private String vcsversion;

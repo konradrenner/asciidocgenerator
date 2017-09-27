@@ -1,9 +1,8 @@
 package org.asciidocgenerator.ui;
 
-
 public interface NavigationSelectedEvent {
 
-	public String getGroup();
+	String getGroup();
 
-	public NavigationPathPrefix getPathPrefix();
+	NavigationPathPrefix getPathPrefix();
 }

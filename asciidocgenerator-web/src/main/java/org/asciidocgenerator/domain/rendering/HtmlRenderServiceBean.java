@@ -40,13 +40,13 @@ public class HtmlRenderServiceBean {
 
 	private HtmlContentEditor contentEditor;
 	private MetaInformation metaInformation;
-	private String baseProjectPath;
 
 	@Asynchronous
 	public void render(@Observes FilesDownloadedEvent downloadedEvent) throws IOException {
 
-		baseProjectPath =
-						Paths.get(baseDirectoryService.getBaseDirectory(), downloadedEvent.getProjectName()).toString();
+		final String baseProjectPath = Paths.get(	baseDirectoryService.getBaseDirectory(),
+													downloadedEvent.getProjectName())
+											.toString();
 		DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(baseProjectPath);
 		List<File> asciidocFiles = directoryWalker.scan();
 		contentEditor = new HtmlContentEditor();

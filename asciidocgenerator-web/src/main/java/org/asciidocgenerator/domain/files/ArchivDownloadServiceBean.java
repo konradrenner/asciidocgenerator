@@ -55,7 +55,7 @@ public class ArchivDownloadServiceBean {
 															removeWebhookPrefix(event.getReference())));
 		} catch (IOException e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "unable to download project", e);
-			throw new DokuGeneratorException(ErrorCode.UNABLE_TO_DOWNLOAD_PROJECT);
+			throw new DokuGeneratorException(ErrorCode.UNABLE_TO_DOWNLOAD_PROJECT, e);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class ArchivDownloadServiceBean {
 			return new URL(newUrl.toString());
 		} catch (MalformedURLException e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "url not correct", e);
-			throw new DokuGeneratorException(ErrorCode.MALFORMED_REQUESTED_DOWNLOAD_URL);
+			throw new DokuGeneratorException(ErrorCode.MALFORMED_REQUESTED_DOWNLOAD_URL, e);
 		}
 	}
 

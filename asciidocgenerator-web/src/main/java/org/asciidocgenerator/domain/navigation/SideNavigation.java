@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
@@ -17,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.asciidocgenerator.Trail;
 
 @Entity
@@ -44,7 +42,6 @@ public class SideNavigation
 								updatable = false) })
 	private MainNavigation mainNavigation;
 
-
 	@Transient
 	private List<String> pathFragments;
 
@@ -59,7 +56,7 @@ public class SideNavigation
 	}
 
 	@PostLoad
-	void init() {
+	private void init() {
 		String[] splitted = key.getNavigationPath().split(getSeparator());
 		pathFragments = Arrays.asList(splitted);
 	}
@@ -95,7 +92,6 @@ public class SideNavigation
 
 		return Objects.equals(key, other.key);
 	}
-
 
 	@Override
 	public String toString() {

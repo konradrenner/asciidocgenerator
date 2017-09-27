@@ -1,7 +1,5 @@
 package org.asciidocgenerator.domain.navigation;
 
-import static javax.persistence.CascadeType.ALL;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +14,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
 import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,7 +27,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.asciidocgenerator.Trail;
 
 @Entity
@@ -79,28 +76,39 @@ public class MainNavigation
 	}
 
 	@PostLoad
-	void init() {
-		groupMainNavigationTrail = new Trail() {
+	private void init() {
+		groupMainNavigationTrail = new InternalTrail(group.getId(), mainNavigationName);
+	}
 
-			@SuppressWarnings("synthetic-access")
-			private final String fullPath = group.getId() + getSeparator() + mainNavigationName;
+	static final class InternalTrail
+			implements Trail, Serializable {
 
-			@Override
-			public String getFullPath() {
-				return fullPath;
-			}
+		private final String fullPath;
 
-			@Override
-			public List<String> getFragments() {
-				return Arrays.asList(fullPath.split(getSeparator()));
-			}
-		};
+		InternalTrail(String groupId, String name) {
+			fullPath = groupId + getSeparator() + name;
+		}
+
+		@Override
+		public String getFullPath() {
+			return fullPath;
+		}
+
+		@Override
+		public List<String> getFragments() {
+			return Arrays.asList(fullPath.split(getSeparator()));
+		}
+
+		@Override
+		public String toString() {
+			return "InternalTrail{" + "fullPath=" + fullPath + '}';
+		}
+
 	}
 
 	public String getMainNavigationName() {
 		return mainNavigationName;
 	}
-
 
 	public NavigationGroup getGroup() {
 		return group;
@@ -114,11 +122,10 @@ public class MainNavigation
 		this.sortierung = sortierung;
 	}
 
-
 	public SortedSet<SideNavigation> getSidenavigation() {
 		return new TreeSet<>(sideNavigation);
 	}
-	
+
 	public Trail getMainNavigationTrail() {
 		return groupMainNavigationTrail;
 	}
@@ -189,10 +196,10 @@ public class MainNavigation
 		}
 
 		List<String> characteristics = new ArrayList<>(fragments.length);
-		String currentCharacteristic = fragments[0] + separator + fragments[1];
+		StringBuilder currentCharacteristic = new StringBuilder(fragments[0]).append(separator).append(fragments[1]);
 		for (int i = 2; i < fragments.length; i++) {
-			currentCharacteristic = currentCharacteristic + separator + fragments[i];
-			characteristics.add(currentCharacteristic);
+			currentCharacteristic.append(separator).append(fragments[i]);
+			characteristics.add(currentCharacteristic.toString());
 		}
 		return characteristics.stream();
 	}
@@ -219,7 +226,6 @@ public class MainNavigation
 		return Objects.equals(mainNavigationName, other.getMainNavigationName())
 				&& Objects.equals(group, other.getGroup());
 	}
-
 
 	@Override
 	public String toString() {

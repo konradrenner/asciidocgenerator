@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.asciidocgenerator.domain.content.Article;
 import org.asciidocgenerator.ui.PageService;
@@ -16,14 +14,10 @@ public class MultipleArticlePageController
 		implements PageController {
 
 	private final List<Article> articles;
-	private final HttpServletRequest request;
-	private final HttpServletResponse response;
 
-	public MultipleArticlePageController(HttpServletRequest req, HttpServletResponse resp, List<Article> articles) {
+	public MultipleArticlePageController(List<Article> articles) {
 		super();
 		this.articles = articles;
-		this.request = req;
-		this.response = resp;
 	}
 
 	@Override

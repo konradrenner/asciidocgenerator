@@ -1,6 +1,6 @@
 package org.asciidocgenerator;
 
-public class Validate {
+public final class Validate {
 
 	private Validate() {
 

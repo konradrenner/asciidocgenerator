@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.asciidocgenerator.DokuGeneratorException;
+import org.asciidocgenerator.ui.HTMLErrorCodes;
 import org.asciidocgenerator.ui.PageService;
 
 public class DefaultPageHandler {
@@ -28,7 +29,7 @@ public class DefaultPageHandler {
 			RequestDispatcher rd = req.getRequestDispatcher("/app/layout.jsp");
 			rd.forward(req, resp);
 		} catch (DokuGeneratorException e) {
-			resp.sendError(404);
+			resp.sendError(HTMLErrorCodes.NOT_FOUND);
 		}
 	}
 }

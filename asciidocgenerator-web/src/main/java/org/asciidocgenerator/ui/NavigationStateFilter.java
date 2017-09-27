@@ -46,7 +46,7 @@ public class NavigationStateFilter
 		try {
 			event.fire(selectedEvent);
 		} catch (DokuGeneratorException e) {
-			((HttpServletResponse) response).sendError(404);
+			((HttpServletResponse) response).sendError(HTMLErrorCodes.NOT_FOUND);
 		}
 
 		chain.doFilter(request, response);

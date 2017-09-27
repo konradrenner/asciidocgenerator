@@ -2,7 +2,6 @@ package org.asciidocgenerator.domain.content;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
@@ -36,7 +35,6 @@ public class ArticleKey
 		return new Builder();
 	}
 
-
 	public interface WithNavigationspfad {
 
 		WithAblagepfad navigationspfad(String value);
@@ -48,10 +46,11 @@ public class ArticleKey
 	}
 
 	public interface Finish {
+
 		ArticleKey build();
 	}
 
-	public static class Builder
+	public static final class Builder
 			implements WithNavigationspfad, WithAblagepfad, Finish {
 
 		private String navigationspfad;
@@ -65,7 +64,6 @@ public class ArticleKey
 		public ArticleKey build() {
 			return new ArticleKey(navigationspfad, ablagepfad);
 		}
-
 
 		@Override
 		public Finish ablagepfad(String value) {
@@ -91,11 +89,7 @@ public class ArticleKey
 
 	@Override
 	public String toString() {
-		return "BeitragKey [navigationspfad="
-				+ navigationspfad
-				+ ", ablagepfad="
-				+ ablagepfad
-				+ "]";
+		return "BeitragKey [navigationspfad=" + navigationspfad + ", ablagepfad=" + ablagepfad + "]";
 	}
 
 	@Override
