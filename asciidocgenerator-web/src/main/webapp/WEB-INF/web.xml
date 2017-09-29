@@ -31,7 +31,11 @@
 	<error-page>
 		<error-code>404</error-code>
 		<location>/app/error/error404.jsp</location>
-	</error-page>
+        </error-page>
+        <error-page>
+            <error-code>403</error-code>
+            <location>/app/error/error403.jsp</location>
+        </error-page>
 	
 	<filter>
             <filter-name>navigationFilter</filter-name>
@@ -54,10 +58,6 @@
                 <role-name>admin</role-name>
             </auth-constraint>
         </security-constraint>
-        <login-config>
-            <auth-method>KEYCLOAK</auth-method>
-            <realm-name>this is ignored currently</realm-name>
-        </login-config>
         <security-role>
             <role-name>admin</role-name>
         </security-role>

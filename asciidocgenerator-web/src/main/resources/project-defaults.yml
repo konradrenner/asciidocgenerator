@@ -20,4 +20,15 @@ swarm:
                 connection-url: jdbc:h2:~/.asciidocgenerator/db
                 user-name: sa
                 password: sa
+    deployment:
+        asciidocgenerator.war:
+            swagger:
+                packages:
+                    - org.asciidocgenerator.api.generator
+                root: api/v1
+                title: asciidocgenerator
+                license: MIT
+            web:
+                login-config:
+                    auth-method: KEYCLOAK
             

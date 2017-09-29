@@ -26,7 +26,7 @@
 	<div id="webContent">
 		<div id="errorMessage">
 			<div>
-				<span id="errorCode">404</span><span id="message"><fmt:message key="error_404" /></span><br>
+                            <span id="errorCode">403</span><span id="message"><fmt:message key="error_403" /></span><br>
                         <span id="link"><a href="<c:url value="/"/>"><fmt:message key="label_home" /></a></span>
                 </div>
 		</div>
