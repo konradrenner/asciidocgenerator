@@ -14,7 +14,7 @@ After the build has completed, you will find a *.war file and a *.jar file in th
 
 The *.war file should be deployable on every Java EE 7 Web-Profile compliant app server (look into the link:https://github.com/konradrenner/asciidocgenerator/blob/master/asciidocgenerator-web/src/main/resources/project-defaults.yml[project-defaults.yml] file for required configurations of the server). Be aware that the link:https://github.com/asciidoctor/asciidoctorj[asciidoctorj] libs must be available in the system classloader of the appserver!
 
-But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), just with "java -jar" command. This will boot a Wildfly Swarm instance with everything needed. If you start the app the first time, you have to create a realm in the provided Keycloak instance.
+But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), just with "java -jar" command. This will boot a WildFly Swarm instance with everything needed. If you start the app the first time, you have to create a realm in the provided Keycloak instance.
 
 === Initial Keycloak setup
 
@@ -40,6 +40,15 @@ The following table displays properties which can be set at application start (i
 |~/.asciidocgenerator/files
 |Location of generated files
 |===
+
+=== WildFly Swarm configuration
+
+If you use the "fat jar" you can use all properties of WildFly Swarm to configure it. Please visit the following sites for full details:
+
+- link:https://reference.wildfly-swarm.io/configuration.html[Configuration of a WildFly Swarm Application]
+- link:http://wildfly-swarm.io/tutorial/step-4/[Environment specific configuration]
+- link:https://wildfly-swarm.gitbooks.io/wildfly-swarm-users-guide/content/v/2016.9/configuration/project_stages.html[Project Stages]
+- link:https://github.com/wildfly-swarm/wildfly-swarm-examples[WildFly Swarm Examples]
 
 == Using
 
