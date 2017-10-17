@@ -62,7 +62,7 @@ If you want to attach one or more tags to an article, just include the :keywords
 
 *Example:* _:keywords: work, very important_
 
-asciidocgenerator also comes with the asciidoctorj-diagram plugin, so it is possible to also define diagrams in your asciidoc files (e.g. plantuml) and the app will render it. Be aware that if you want asciidocgenerator to render also diagrams, graphviz must be installed on the system.
+asciidocgenerator also comes with the asciidoctorj-diagram plugin, so it is possible to embed diagrams in your asciidoc files (e.g. plantuml) and the app will render it. Be aware that it is possible, that you need graphviz installed on the system, if you want asciidocgenerator to render diagrams (plantuml for examples supports generation via jdot, so that there is no graphviz necessary => have a look at link:https://github.com/konradrenner/asciidocgenerator/blob/master/asciidoc-examples/diagram_test.adoc[this file] to see how to turn on plantuml generation via jdot).
 
 === The user interface
 
