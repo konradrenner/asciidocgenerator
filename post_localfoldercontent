@@ -1,0 +1,77 @@
+#!/bin/bash
+PROJECTNAME=asciidoc-examples
+VERSION=1.0.0
+URL=http://localhost:8080
+SOURCEDIR=asciidoc-examples
+USE_READLINK=true
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -p|--projectname)
+    PROJECTNAME="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -v|--version)
+    VERSION="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -u|--url)
+    URL="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -s|--sourcedir)
+    SOURCEDIR="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -a|--absolutepath)
+    USE_READLINK=false
+    shift # past argument
+    ;;
+    -h|--help)
+    echo "This script alters the localfolder_generation_template.json file with the given parameters and posts it to a doku plattform server"
+    echo " "
+    echo "Possbile arguments:"
+    echo " "
+    echo "-p, --projectname [VALUE]     Name of the documentation project, default: asciidoc-examples"
+    echo "-v, --version [VALUE]         Version number of the documentation, default: 1.0.0"
+    echo "-u, --url [VALUE]             URL of the doku plattform server, default: http://localhost:8080"
+    echo "-s, --sourcedir [VALUE]       Directory where the local documentation files are, default: asciidoc-examples"
+    echo "-a, --absolutepath            The source dir is an absolute file path (use if your system does not support 'readlink -f'"
+    exit 1
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+
+if [ $USE_READLINK == true ]; then
+    SOURCEDIR=$(readlink -f $SOURCEDIR)
+    echo "resolved relative source directory to: "$SOURCEDIR
+fi
+
+
+
+cp localfolder_generation_template.json /tmp/localfolder_generation_template.json
+sed -i -e 's#asciidoc-examples#'$PROJECTNAME'#g' /tmp/localfolder_generation_template.json
+sed -i -e 's#absolute_path_to_folder#'$SOURCEDIR'#g' /tmp/localfolder_generation_template.json
+sed -i -e 's#1.0.0#'$VERSION'#g' /tmp/localfolder_generation_template.json
+
+echo "posting json content:"$(less /tmp/localfolder_generation_template.json)
+echo " "
+curl -vX POST $URL/api/v1/generator/generatelocalFiles -d @/tmp/localfolder_generation_template.json --header "Content-Type: application/json"
+echo " ";
+echo "finished..."
+
+

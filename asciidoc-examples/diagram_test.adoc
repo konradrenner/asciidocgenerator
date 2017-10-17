@@ -1,0 +1,98 @@
+Diagrams and other tests
+========================
+Creator Ofdocument <creator@ofdocument.org>
+v0.0.1, {localdate}
+:navigation: testgroup/Example/Folder/Nav Point
+:lang: en 
+:description: A test of many different asciidoc features
+:keywords: asciidoc, doku, diagrams
+:toclevels: 3
+include::template/config.adoc[]
+
+This document tests many of the asciidoc featurs
+
+NOTE: *Classification:* public
+
+= Diagrams and other things
+
+The following sites contains some asciidoc features
+
+* PlantUML
+* Source Code
+** Java
+** Tree
+* Site inclusion
+
+<<<
+
+== Plant UML Test
+
+There comes the UML:
+
+[plantuml, example, png]
+....
+!pragma graphviz_dot jdot
+
+"Customer A" as customer
+"Company B" as company
+cloud "Web plattform" as web
+
+customer .down.> web : uses for purchases
+company -right-> web : develops plattform
+
+....
+
+<<<
+
+== Source Code Test
+
+A Source-Code snippet
+
+[source,java]
+----
+public class Test{
+    public static void main(String[] args){
+        System.out.println(java.util.Arrays.toString(args));
+    }
+}
+----
+
+
+<<<
+
+== Testtable
+
+
+[cols="2*", options="header"]
+|===
+|Name
+|Group
+
+|Firefox
+|Web Browser
+
+|Java
+|Programming Language
+
+|WildFly
+|Application Server
+|===
+
+<<<
+
+== Treeview
+
+[monotree]  
+----  
+> C:  
+>> Temp  
+>> Windows  
+>>> System32  
+>>>> drivers  
+>>>>> etc  
+>>>>>> hosts  
+----
+
+<<<
+
+include::resources/included_site.adoc[leveloffset=+1]

@@ -1,0 +1,45 @@
+:attribute-missing: warn
+:!compat-mode:
+:data-uri:
+:icons: font
+:!link-css:
+:nofootnotes:
+:numbered:
+:reproducible:
+:sectanchors:
+:!sectnums:
+:sectlinks:
+:source-highlighter: coderay
+:stem:
+:title-logo-image: template/logo.png
+:toc: left
+// i18n
+ifeval::["{lang}" == "de"]
+:appendix-caption: Anhang
+:caution-caption: Achtung
+:chapter-label: Kapitel
+:example-caption: Beispiel
+:figure-caption: Abbildung
+:important-caption: Wichtig
+:last-update-label: Zuletzt aktualisiert
+//:listing-caption: Listing
+:manname-title: BEZEICHNUNG
+:note-caption: Anmerkung
+:preface-title: Vorwort
+:table-caption: Tabelle
+:tip-caption: Hinweis
+:toc-title: Inhalt
+:untitled-label: Ohne Titel
+:version-label: Version
+:warning-caption: Warnung
+endif::[]
+// backend-unabhängiges Imagescaling
+ifdef::backend-html5[]
+:half-width: width='50%'
+endif::[]
+ifdef::backend-pdf[]
+:half-width: pdfwidth='50%'
+endif::[]
+ifdef::backend-docbook5[]
+:half-width: scaledwidth='50%'
+endif::[]

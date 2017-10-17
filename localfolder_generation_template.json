@@ -1,5 +1,5 @@
 {
-  "name": "template",
-  "localPath" : "/home/user/.asciidocgenerator/files/template/",
+  "name": "asciidoc-examples",
+  "localPath" : "absolute_path_to_folder",
   "version" : "1.0.0"
 }

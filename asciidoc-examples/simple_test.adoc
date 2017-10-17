@@ -1,0 +1,5 @@
+:navigation: testgroup/Example/Simple Test
+
+= A Simple adoc
+
+thats a simple test
