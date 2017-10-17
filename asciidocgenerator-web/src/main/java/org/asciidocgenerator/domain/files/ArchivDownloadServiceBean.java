@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import org.asciidocgenerator.DokuGeneratorException;
 import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
 import org.asciidocgenerator.FilesDownloadedEvent;
+import org.asciidocgenerator.LocalFilesUploadedEvent;
 import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent;
 import org.asciidocgenerator.TokenService;
@@ -53,6 +54,24 @@ public class ArchivDownloadServiceBean {
 															destinationFolder,
 															event.getUrl().toString(),
 															removeWebhookPrefix(event.getReference())));
+		} catch (IOException e) {
+			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "unable to download project", e);
+			throw new DokuGeneratorException(ErrorCode.UNABLE_TO_DOWNLOAD_PROJECT, e);
+		}
+	}
+
+	public void localArchiveUploaded(@Observes LocalFilesUploadedEvent event) {
+		try {
+
+			Path sourceDirectory = event.getDirectory();
+
+			Path destinationFolder = extractService.copy(sourceDirectory, event.getProjectName());
+
+			downloadedEvent.fire(new FilesDownloadedEvent(	event.getRepositoryName(),
+															event.getProjectName(),
+															destinationFolder,
+															event.getVcsurl(),
+															event.getVcsversion()));
 		} catch (IOException e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "unable to download project", e);
 			throw new DokuGeneratorException(ErrorCode.UNABLE_TO_DOWNLOAD_PROJECT, e);

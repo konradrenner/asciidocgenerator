@@ -14,7 +14,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import org.asciidocgenerator.FilesDownloadedEvent;
+import org.asciidocgenerator.LocalFilesUploadedEvent;
 import org.asciidocgenerator.Logged;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent;
 import org.asciidocgenerator.PushToRepositoryOccuredEvent.ObjectKind;
@@ -28,7 +28,7 @@ public class GeneratorResource {
 	private Event<PushToRepositoryOccuredEvent> pushEvent;
 
 	@Inject
-	private Event<FilesDownloadedEvent> downloadedEvent;
+	private Event<LocalFilesUploadedEvent> uploadedEvent;
 
 	@Path("generatelocalFiles")
 	@POST
@@ -40,13 +40,13 @@ public class GeneratorResource {
 			java.nio.file.Path path = pathToFolder.getPath();
 			String version = pathToFolder.getVersion();
 
-			FilesDownloadedEvent event = new FilesDownloadedEvent("Local", name, path, "localhost", version);
+			LocalFilesUploadedEvent event = new LocalFilesUploadedEvent("Local", name, path, "localhost", version);
 
-			downloadedEvent.fire(event);
+			uploadedEvent.fire(event);
 
 		} catch (Exception e) {
 			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "problem processing event", e);
-			return Response.serverError().build();
+			return Response.serverError().entity(e.getMessage()).build();
 		}
 		return Response.ok().build();
 	}

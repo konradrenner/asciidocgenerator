@@ -61,7 +61,7 @@ public class LocalFilePath {
 	}
 
 	public Path getPath() {
-		return Paths.get(path);
+		return Paths.get(path).toAbsolutePath().normalize();
 	}
 
 	public String getVersion() {
