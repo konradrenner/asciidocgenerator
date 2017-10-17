@@ -76,4 +76,4 @@ The asciidocgenerator webapp provides integration for GitLab webhooks. You just 
 
 === Generating local files
 
-It is also possible to generate html and pdf files from adoc files which are stored on the local file system. Just have a look at the _"localfolder_generation_template.json"_ and _"webhook_post.sh"_ files to get an idea how to convert and publish local files.
+It is also possible to generate html and pdf files from adoc files which are stored on the local file system. Just have a look at the _"localfolder_generation_template.json"_ and _"post_localfoldercontent"_ files to get an idea how to convert and publish local files. On Linux/Unix systems you can use the "post_localfoldercontent"-script out of the box, just type _"./post_localfoldercontent --help"_ to see how it works (if you don't specify any options, the asciidoc-examples folder of this repository wil be tried to upload to a local running asciidocgenerator instance).

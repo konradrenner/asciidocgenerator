@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Welcome!"
 PROJECTNAME=asciidoc-examples
 VERSION=1.0.0
 URL=http://localhost:8080
@@ -21,11 +22,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    -u|--url)
-    URL="$2"
-    shift # past argument
-    shift # past value
-    ;;
+#    -u|--url)
+#    URL="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
     -s|--sourcedir)
     SOURCEDIR="$2"
     shift # past argument
@@ -36,13 +37,15 @@ case $key in
     shift # past argument
     ;;
     -h|--help)
-    echo "This script alters the localfolder_generation_template.json file with the given parameters and posts it to a doku plattform server"
+    echo "This script creates a tempory json file that uses the localfolder_generation_template.json file as template and posts the temporary json file to an local asciidocgenerator server, so that local asciidoc generation is started"
     echo " "
-    echo "Possbile arguments:"
+    echo "Usage: post_localfoldercontent [OPTION]..."
+    echo " "
+    echo "Possbile options:"
     echo " "
     echo "-p, --projectname [VALUE]     Name of the documentation project, default: asciidoc-examples"
     echo "-v, --version [VALUE]         Version number of the documentation, default: 1.0.0"
-    echo "-u, --url [VALUE]             URL of the doku plattform server, default: http://localhost:8080"
+#    echo "-u, --url [VALUE]             URL of the doku plattform server, default: http://localhost:8080"
     echo "-s, --sourcedir [VALUE]       Directory where the local documentation files are, default: asciidoc-examples"
     echo "-a, --absolutepath            The source dir is an absolute file path (use if your system does not support 'readlink -f'"
     exit 1
@@ -53,25 +56,37 @@ case $key in
     ;;
 esac
 done
+
+if [ ${#POSITIONAL[@]} -gt 0  ]; then
+    echo "Unkown options: "$POSITIONAL
+fi
+
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 
 if [ $USE_READLINK == true ]; then
     SOURCEDIR=$(readlink -f $SOURCEDIR)
-    echo "resolved relative source directory to: "$SOURCEDIR
+    echo "Resolved relative source directory to: "$SOURCEDIR
 fi
 
-
+echo " "
+echo "Creating temporary instance of localfolder_generation_template.json file with the following values:"
+echo "Projectname: "$PROJECTNAME
+echo "Source directory: "$SOURCEDIR
+echo "Version: "$VERSION
+echo "Destination URL:"$URL
+echo "Destination URL-Path: /api/v1/generator/generatelocalFiles"
+echo " "
 
 cp localfolder_generation_template.json /tmp/localfolder_generation_template.json
 sed -i -e 's#asciidoc-examples#'$PROJECTNAME'#g' /tmp/localfolder_generation_template.json
 sed -i -e 's#absolute_path_to_folder#'$SOURCEDIR'#g' /tmp/localfolder_generation_template.json
 sed -i -e 's#1.0.0#'$VERSION'#g' /tmp/localfolder_generation_template.json
 
-echo "posting json content:"$(less /tmp/localfolder_generation_template.json)
+echo "Posting json content:"$(less /tmp/localfolder_generation_template.json)
 echo " "
 curl -vX POST $URL/api/v1/generator/generatelocalFiles -d @/tmp/localfolder_generation_template.json --header "Content-Type: application/json"
 echo " ";
-echo "finished..."
+echo "Finished..."
 
 
