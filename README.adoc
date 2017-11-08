@@ -34,7 +34,7 @@ The following table displays properties which can be set at application start (i
 
 |[[asciidocgenerator.token]]asciidocgenerator.token
 |none
-|Token for authentication at a GitLab server
+|link:https://docs.gitlab.com/ce/user/profile/personal_access_tokens.html[Token] for authentication at a GitLab server
 
 |asciidocgenerator.baseDirectory
 |~/.asciidocgenerator/files
