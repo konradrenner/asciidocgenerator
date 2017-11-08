@@ -20,7 +20,7 @@ But we strongly recommend running the "fat jar" (asciidocgenerator-swar.jar), ju
 
 Before the first start, just open "[URL]:[PORT]/auth" (e.g. localhost:8080/auth) in a browser. First you have to create a Keycloak admin user. After this, create a new realm like described here: https://dzone.com/articles/securing-wildfly-swarm-apps-with-keycloak
 
-The Realm name and resource has to be "asciidocgenerator". If you use this convention, the existing keycloak.json must not be changed. Users which should be able to open the settings of the asciidocgenerator app must have the role "admin".
+The Realm name and resource has to be "asciidocgenerator". If you use this convention, the existing keycloak.json must not be changed (if you want to use your own keycloak.json, specify the proper link:http://docs.wildfly-swarm.io/2017.11.0/#_keycloak[Wildfly Swarm system property] ). Users which should be able to open the settings of the asciidocgenerator app must have the role "admin".
 
 === Properties
 
