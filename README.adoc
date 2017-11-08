@@ -32,7 +32,7 @@ The following table displays properties which can be set at application start (i
 |Default
 |Description
 
-|asciidocgenerator.token
+|[[asciidocgenerator.token]]asciidocgenerator.token
 |none
 |Token for authentication at a GitLab server
 
@@ -72,7 +72,7 @@ image::images/screen.png[]
 
 === GitLab integration
 
-The asciidocgenerator webapp provides integration for GitLab webhooks. You just have to provide the asciidocgenerator.token-Property and configure a webhook for the "Tag Push Hook". The webhook must be configured to send a POST Request to the following URL: _http://[URL]:[PORT]/api/v1/generator/gitlabtagpushed_
+The asciidocgenerator webapp provides integration for GitLab webhooks. You just have to provide the <<asciidocgenerator.token>>-Property and configure a webhook for the "Tag Push Hook". The webhook must be configured to send a POST Request to the following URL: _http://[URL]:[PORT]/api/v1/generator/gitlabtagpushed_
 
 === Generating local files
 
