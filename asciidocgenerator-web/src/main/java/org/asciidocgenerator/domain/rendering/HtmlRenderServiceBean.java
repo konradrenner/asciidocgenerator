@@ -67,7 +67,7 @@ public class HtmlRenderServiceBean {
                     try{
 			generateHtml(file);
                     }catch(Exception e){
-                        
+                        generateExceptionHTML(file, e);
                     }
 		}
 
