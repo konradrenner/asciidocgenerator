@@ -37,7 +37,7 @@ public class HtmlDocument {
 	String manipulateContent(InputStream inputStream) {
 
 		StringBuilder builder = new StringBuilder();
-		Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.displayName());
+		Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.toString());
 		String body = scanner.findWithinHorizon("<body", Integer.MAX_VALUE);
 		if (body != null) {
 			builder.append("<div");

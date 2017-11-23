@@ -2,10 +2,15 @@ package org.asciidocgenerator.domain.rendering;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,8 +47,8 @@ public class HtmlRenderServiceBean {
 	private MetaInformation metaInformation;
 
 	@Asynchronous
-	public void render(@Observes FilesDownloadedEvent downloadedEvent) throws IOException {
-
+	public void render(@Observes FilesDownloadedEvent downloadedEvent) {
+            
 		final String baseProjectPath = Paths.get(	baseDirectoryService.getBaseDirectory(),
 													downloadedEvent.getProjectName())
 											.toString();
@@ -59,7 +64,11 @@ public class HtmlRenderServiceBean {
 		LOG.log(Level.INFO, "Got new files for rendering: {0}", downloadedEvent);
 		LOG.log(Level.INFO, "baseProjectPath: {0}", baseProjectPath);
 		for (File file : asciidocFiles) {
+                    try{
 			generateHtml(file);
+                    }catch(Exception e){
+                        
+                    }
 		}
 
 		documentRegister.publishRegisteredDocuments();
@@ -106,5 +115,38 @@ public class HtmlRenderServiceBean {
 							.build();
 		}
 	}
+        
+        void generateExceptionHTML(File origin, Throwable th){
+            String fileName = origin.getName();
+            String newFileName = fileName.replaceAll(".adoc", ".html");
+            Path newFilePath = Paths.get(origin.getParent(), newFileName);
+            
+            
+            try(InputStream resourceAsStream = getClass().getResourceAsStream("htmlerror_template.txt");
+                    Scanner scanner = new Scanner(resourceAsStream);){
+                StringBuilder newHtml = new StringBuilder();
+                while(scanner.hasNextLine()){
+                    String line = scanner.nextLine();
+                    
+                    if(line.contains("ERROR_TITLE")){
+                        line = line.replace("ERROR_TITLE", origin.getName());
+                    }else if(line.contains("ERROR_TEXT")){
+                        line = line.replace("ERROR_TEXT", buildExceptionText(th));
+                    }
+                    newHtml.append(line);
+                }
+                
+                Files.write(newFilePath, newHtml.toString().getBytes(StandardCharsets.UTF_8));
+            }catch(IOException e){
+                Logger.getLogger(getClass().toString()).log(Level.SEVERE, "problem generating html", e);
+            }
+        }
+        
+        String buildExceptionText(Throwable th){
+            StringBuilder sb = new StringBuilder("<b>"+th.getClass().toString()+"</b>");
+            sb.append("<br><br>");
+            Arrays.stream(th.getStackTrace()).forEach((element) -> {sb.append(element).append("<br>");});
+            return sb.toString();
+        }
 
 }
