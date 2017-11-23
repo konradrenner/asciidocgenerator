@@ -24,7 +24,7 @@ public class HtmlDocument {
 
 	public String readContent() throws IOException {
 
-		List<String> readAllLines = Files.readAllLines(theFile.toPath());
+		List<String> readAllLines = Files.readAllLines(theFile.toPath(), StandardCharsets.UTF_8);
 		StringBuilder builder = new StringBuilder();
 		for (String line : readAllLines) {
 			builder.append(line).append(System.lineSeparator());
@@ -37,7 +37,7 @@ public class HtmlDocument {
 	String manipulateContent(InputStream inputStream) {
 
 		StringBuilder builder = new StringBuilder();
-		Scanner scanner = new Scanner(inputStream);
+		Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.displayName());
 		String body = scanner.findWithinHorizon("<body", Integer.MAX_VALUE);
 		if (body != null) {
 			builder.append("<div");
