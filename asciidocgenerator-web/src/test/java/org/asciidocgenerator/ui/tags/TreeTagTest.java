@@ -61,12 +61,6 @@ public class TreeTagTest {
 	}
 
 	@Test
-	public void testBuildinOfPlaceholderForLayout() {
-		String expected = "<span class=\"hiddenSpan\">+</span>";
-		assertEquals(expected, underTest.buildPlaceholderForLayout());
-	}
-
-	@Test
 	public void testCreationOfFolderStartTagWhenHidden() {
 		NavigationTreeNode treeNode = mock(NavigationTreeNode.class);
 		when(treeNode.getNavigationPath()).thenReturn(PATH);
@@ -104,17 +98,12 @@ public class TreeTagTest {
 		when(node.getName()).thenReturn(NAME);
 		when(node.articlesAttached()).thenReturn(false);
 
-		String function = underTest.buildPlaceholderForLayout();
+		String function = underTest.buildEmptyString();
 		String link = underTest.buildLink(node);
 		String expected = String.format("<span>%s%s</span>", function, link);
-		String actual = underTest.buildDescriptorForLayout(node, underTest::buildPlaceholderForLayout);
+		String actual = underTest.buildDescriptorForLayout(node, underTest::buildEmptyString);
 
 		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testBuildPlaceholderForLayout() {
-		assertEquals(buildPlaceholderForLayout(), underTest.buildPlaceholderForLayout());
 	}
 
 	@Test

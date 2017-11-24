@@ -22,6 +22,9 @@ public class NavigationStateFilter
 	@Inject
 	private Event<NavigationSelectedEvent> event;
 
+	@Inject
+	private URLEncoderService encoderService;
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// nothing
@@ -41,7 +44,7 @@ public class NavigationStateFilter
 		PageService pageServive = new PageService(req);
 		NavigationPathService navigationPathService = new NavigationPathService(pageServive.getRequestedRelativeUrl());
 
-		NavigationSelectedEvent selectedEvent = navigationPathService.createNavigationSelectedEvent();
+		NavigationSelectedEvent selectedEvent = navigationPathService.createNavigationSelectedEvent(encoderService::decode);
 
 		try {
 			event.fire(selectedEvent);

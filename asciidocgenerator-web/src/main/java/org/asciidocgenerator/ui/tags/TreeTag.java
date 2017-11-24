@@ -87,7 +87,7 @@ public class TreeTag
 	String createNodeTag(NavigationTreeNode node) {
 		return String.format(	"<li id=\"%s\">%s</li>",
 								node.getNavigationPath(),
-								buildDescriptorForLayout(node, this::buildPlaceholderForLayout));
+								buildDescriptorForLayout(node, this::buildEmptyString));
 	}
 
 	String buildDescriptorForLayout(NavigationTreeNode node, Supplier<String> function) {
@@ -99,8 +99,8 @@ public class TreeTag
 								this.toggleFunction);
 	}
 
-	String buildPlaceholderForLayout() {
-		return "<span class=\"hiddenSpan\">+</span>";
+	String buildEmptyString() {
+		return "";
 	}
 
 	String buildLink(NavigationTreeNode node) {

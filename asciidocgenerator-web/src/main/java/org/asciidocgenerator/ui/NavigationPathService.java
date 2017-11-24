@@ -2,10 +2,10 @@ package org.asciidocgenerator.ui;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.function.Function;
 import org.asciidocgenerator.DokuGeneratorException;
-import org.asciidocgenerator.Trail;
 import org.asciidocgenerator.DokuGeneratorException.ErrorCode;
+import org.asciidocgenerator.Trail;
 
 public class NavigationPathService {
 
@@ -39,15 +39,17 @@ public class NavigationPathService {
 		return Optional.ofNullable(navigation);
 	}
 
-	public NavigationSelectedEvent createNavigationSelectedEvent() {
+	public NavigationSelectedEvent createNavigationSelectedEvent(Function<String, String> decodeFunction) {
 		switch (pathPrefix) {
 			case ADMIN:
 				return new AdminNavigationSelectedEvent(getGroupId(), getNavigation().get());
 			default:
-				if(getNavigation().isPresent()){
-					return new MainNavigationSelectedEvent(getPathPrefix(), getGroupId(), getNavigation().get());
+				if (getNavigation().isPresent()) {
+					return new MainNavigationSelectedEvent(	getPathPrefix(),
+															decodeFunction.apply(getGroupId()),
+															decodeFunction.apply(getNavigation().get()));
 				}
-				return new GroupSelectedEvent(getPathPrefix(), getGroupId());
+				return new GroupSelectedEvent(getPathPrefix(), decodeFunction.apply(getGroupId()));
 		}
 	}
 

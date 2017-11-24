@@ -7,6 +7,7 @@ import org.asciidocgenerator.DokuGeneratorException;
 import org.asciidocgenerator.Trail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,6 +21,13 @@ public class NavigationPathServiceTest {
 	private Trail trail;
 
 	private NavigationPathService underTest;
+
+	private URLEncoderService encoderService;
+
+	@Before
+	public void setUp() {
+		encoderService = new URLEncoderService();
+	}
 
 	@Test(expected = DokuGeneratorException.class)
 	public void trailTooShort() {
@@ -67,7 +75,7 @@ public class NavigationPathServiceTest {
 
 		underTest = new NavigationPathService(trail);
 
-		AdminNavigationSelectedEvent event = (AdminNavigationSelectedEvent) underTest.createNavigationSelectedEvent();
+		AdminNavigationSelectedEvent event = (AdminNavigationSelectedEvent) underTest.createNavigationSelectedEvent(encoderService::decode);
 
 		assertEquals(NavigationPathPrefix.ADMIN, event.getPathPrefix());
 		assertEquals("group", event.getGroup());
@@ -81,7 +89,7 @@ public class NavigationPathServiceTest {
 
 		underTest = new NavigationPathService(trail);
 
-		MainNavigationSelectedEvent event = (MainNavigationSelectedEvent) underTest.createNavigationSelectedEvent();
+		MainNavigationSelectedEvent event = (MainNavigationSelectedEvent) underTest.createNavigationSelectedEvent(encoderService::decode);
 
 		assertEquals(NavigationPathPrefix.ARTICLE, event.getPathPrefix());
 		assertEquals("group", event.getGroup());
@@ -95,9 +103,36 @@ public class NavigationPathServiceTest {
 
 		underTest = new NavigationPathService(trail);
 
-		GroupSelectedEvent event = (GroupSelectedEvent) underTest.createNavigationSelectedEvent();
+		GroupSelectedEvent event = (GroupSelectedEvent) underTest.createNavigationSelectedEvent(encoderService::decode);
 
 		assertEquals(NavigationPathPrefix.NAVIGATION, event.getPathPrefix());
 		assertEquals("group", event.getGroup());
+	}
+
+	@Test
+	public void mainnavigationEventEncoded() {
+		List<String> fragments = Arrays.asList("article", "grou%20p", "tes%20t");
+		when(trail.getFragments()).thenReturn(fragments);
+
+		underTest = new NavigationPathService(trail);
+
+		MainNavigationSelectedEvent event = (MainNavigationSelectedEvent) underTest.createNavigationSelectedEvent(encoderService::decode);
+
+		assertEquals(NavigationPathPrefix.ARTICLE, event.getPathPrefix());
+		assertEquals("grou p", event.getGroup());
+		assertEquals("tes t", event.getNavigationTab());
+	}
+
+	@Test
+	public void groupEventEncoded() {
+		List<String> fragments = Arrays.asList("navigation", "grou%20p");
+		when(trail.getFragments()).thenReturn(fragments);
+
+		underTest = new NavigationPathService(trail);
+
+		GroupSelectedEvent event = (GroupSelectedEvent) underTest.createNavigationSelectedEvent(encoderService::decode);
+
+		assertEquals(NavigationPathPrefix.NAVIGATION, event.getPathPrefix());
+		assertEquals("grou p", event.getGroup());
 	}
 }
