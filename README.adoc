@@ -3,7 +3,7 @@
 
 = asciidocgenerator
 
-asciidocgenerator is a webapplication which can convert and publish asciidoc files in html and pdf. This application also provides integratoin for GitLab webhooks.
+asciidocgenerator is a webapplication which can convert and publish asciidoc files into html and pdf. This application also provides integratoin for GitLab webhooks. Note that the asciidoc files must be UTF-8 encoded!
 
 == Building
 
