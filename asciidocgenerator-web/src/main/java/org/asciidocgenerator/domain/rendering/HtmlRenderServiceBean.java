@@ -75,7 +75,8 @@ public class HtmlRenderServiceBean {
 
 	void generateHtml(File origin) throws IOException {
 
-		AsciidocDocument doku = new AsciidocDocument(origin.toPath(), asciidoc).loadDocumentHeader().loadContent();
+		Path originPath = origin.toPath();
+		AsciidocDocument doku = new AsciidocDocument(originPath, asciidoc).loadDocumentHeader().loadContent();
 		String navigation = doku.getNavigation();
 
 		if (navigation != null) {
@@ -104,7 +105,6 @@ public class HtmlRenderServiceBean {
 			} catch (Exception e) {
 				generateExceptionHTMLPage(origin, newFilePath, e);
 			}
-
 			documentRegister.newRenderedDocument()
 							.title(title)
 							.group(group)
@@ -112,10 +112,43 @@ public class HtmlRenderServiceBean {
 							.navigationPath(navigationPath)
 							.navigationKey(UUID.randomUUID().toString())
 							.storageLocation(newFilePath.toString())
-							.metainformation(metaInformation)
+							.metainformation(updateDocuURL(metaInformation, originPath))
 							.addKeywords(keywords)
 							.build();
 		}
+	}
+
+	MetaInformation updateDocuURL(MetaInformation source, Path filePath) {
+		// path to file in gitlab
+		// https://gitlab.com/group/repository/blob/version/folderxyz/filexyz.adoc
+		// URL which Gitlab sends over HTTP: https://gitlab.com/group/repository/
+		String urlToRepo = source.getVcsurl();
+		StringBuilder updatedURL = new StringBuilder(source.getVcsurl());
+		String vcsurl = source.getVcsurl();
+
+		if (vcsurl.equals("localhost")) {
+			// if it does not come from an git server, it is not possible to update the url so that it points to the
+			// source file
+			return source;
+		} else {
+			String[] splitted = vcsurl.split("/");
+			String group = splitted[splitted.length - 2];
+			String repo = splitted[splitted.length - 1];
+
+			String filePathString = filePath.toString();
+			String locationWithoutParentFolders = filePathString.split(group + File.separator + repo)[1];
+			updatedURL.append("/blob/");
+			updatedURL.append(source.getVcsversion());
+			updatedURL.append(locationWithoutParentFolders);
+
+		}
+
+		return MetaInformation	.newInstance()
+								.projektname(source.getProjektname())
+								.repositoryname(source.getRepositoryname())
+								.vcsversion(source.getVcsversion())
+								.vcsurl(updatedURL.toString())
+								.build();
 	}
 
 	void generateExceptionHTMLPage(File origin, Path newFilePath, Throwable th) {
