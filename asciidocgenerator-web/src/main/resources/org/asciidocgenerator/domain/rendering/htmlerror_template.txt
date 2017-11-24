@@ -1,4 +1,4 @@
-<body class="article"> 
+<body class="article">
 <div id="header"> 
 <h1>ERROR_TITLE</h1> 
 <div class="details"> 
@@ -11,4 +11,7 @@
 </div> 
 </div> 
 </div> 
+<br>
+<br>
+<br>
 </body>

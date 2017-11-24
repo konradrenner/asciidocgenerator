@@ -107,6 +107,10 @@ body {
     padding: 5px 15px;
     border-bottom: 4px solid white;
 }
+.selectedMenuItem a{
+    padding: 5px 15px;
+    border-bottom: 4px solid white;
+}
 
 #navigationActions{
 	float:right;
