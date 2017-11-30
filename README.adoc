@@ -50,6 +50,10 @@ If you use the "fat jar" you can use all properties of WildFly Swarm to configur
 - link:https://wildfly-swarm.gitbooks.io/wildfly-swarm-users-guide/content/v/2016.9/configuration/project_stages.html[Project Stages]
 - link:https://github.com/wildfly-swarm/wildfly-swarm-examples[WildFly Swarm Examples]
 
+=== Swagger
+
+The app also provides a swagger.json, which expresses the API of the app. The swagger.json is available at this address: http://[URL]:[PORT]/api/v1/swagger.json
+
 == Using
 
 The only thing you need to define in your asciidoc files, so that they will be converted and published, is the :navigation: header field. The value after the :navigation: field must be in the following form "groupname/mainnavigation/sidenavigation".
