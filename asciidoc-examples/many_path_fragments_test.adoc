@@ -1,0 +1,5 @@
+:navigation: space group/space main/Folder A/Folder B/Folder C/Simple Test
+
+= A Simple spaced adoc
+
+thats a simple test

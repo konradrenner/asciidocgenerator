@@ -1,0 +1,5 @@
+:navigation: single/Example/Simple Test
+
+= A Simple adoc
+
+thats a simple test
