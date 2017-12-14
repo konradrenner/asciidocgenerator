@@ -98,7 +98,7 @@ public class HtmlRenderServiceBean {
 			}
 
 			String fileName = origin.getName();
-			String newFileName = fileName.replaceAll(".adoc", ".html");
+			String newFileName = fileName.replaceAll(".adoc", ".html").replaceAll(" ", "_");
 			Path newFilePath = Paths.get(origin.getParent(), newFileName);
 			try {
 				doku.newRender().setContentEditor(contentEditor).enableContentEditing().convertToHtml(newFilePath);

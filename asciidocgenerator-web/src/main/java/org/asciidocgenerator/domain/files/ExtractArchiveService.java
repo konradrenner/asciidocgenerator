@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
@@ -56,17 +57,33 @@ public class ExtractArchiveService {
 			return;
 		}
 
+		final Logger logger = Logger.getLogger("asciidocgenerator-web");
+
 		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+
+			@Override
+			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+				logger.log(Level.INFO, MessageFormat.format("Deleted file: {0}", dir));
+				return super.preVisitDirectory(dir, attrs);
+			}
+
+			@Override
+			public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+				logger.log(Level.WARNING, MessageFormat.format("Failed to visit file:", file), exc);
+				return FileVisitResult.CONTINUE;
+			}
 
 			@Override
 			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 				Files.delete(file);
+				logger.log(Level.INFO, MessageFormat.format("Deleted file: {0}", file));
 				return FileVisitResult.CONTINUE;
 			}
 
 			@Override
 			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
 				Files.delete(dir);
+				logger.log(Level.INFO, MessageFormat.format("Deleted file:{0}", dir));
 				return FileVisitResult.CONTINUE;
 			}
 		});
