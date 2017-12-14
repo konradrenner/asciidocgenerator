@@ -155,7 +155,11 @@ body {
 #sideNavigationLinks {
 	list-style: none;
 	padding-left: 0px;
-	margin-left: 0px;
+        margin-left: 0px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 300px;
 }
 
 #sideNavigation {
@@ -166,9 +170,9 @@ body {
 	opacity: .85;
 	display: inline-flex;
 	flex-direction: column;
-	min-width: 300px;
-	position: fixed;
-	padding: 30px 10px 20px 10px;
+        min-width: 300px;
+        position: fixed;
+        padding: 30px 10px 20px 10px;
 	list-style-type: none;
 	font-size: 12pt;
 	text-align: left;

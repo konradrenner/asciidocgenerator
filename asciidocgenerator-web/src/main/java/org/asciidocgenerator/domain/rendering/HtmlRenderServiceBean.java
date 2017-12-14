@@ -45,6 +45,14 @@ public class HtmlRenderServiceBean {
 	private HtmlContentEditor contentEditor;
 	private MetaInformation metaInformation;
 
+	public HtmlRenderServiceBean() {
+	}
+
+	// For Tests
+	HtmlRenderServiceBean(BaseDirectoryService baseDirectoryService) {
+		this.baseDirectoryService = baseDirectoryService;
+	}
+
 	@Asynchronous
 	public void render(@Observes FilesDownloadedEvent downloadedEvent) {
 
@@ -66,6 +74,7 @@ public class HtmlRenderServiceBean {
 			try {
 				generateHtml(file);
 			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "cannot create html", e);
 				generateExceptionHTML(file, e);
 			}
 		}
@@ -103,6 +112,7 @@ public class HtmlRenderServiceBean {
 			try {
 				doku.newRender().setContentEditor(contentEditor).enableContentEditing().convertToHtml(newFilePath);
 			} catch (Exception e) {
+				Logger.getLogger("asciidocgenerator-web").log(Level.SEVERE, "exception occured while rendering", e);
 				generateExceptionHTMLPage(origin, newFilePath, e);
 			}
 			documentRegister.newRenderedDocument()
@@ -131,15 +141,21 @@ public class HtmlRenderServiceBean {
 			// source file
 			return source;
 		} else {
-			String[] splitted = vcsurl.split("/");
-			String group = splitted[splitted.length - 2];
-			String repo = splitted[splitted.length - 1];
 
-			String filePathString = filePath.toString();
-			String locationWithoutParentFolders = filePathString.split(group + File.separator + repo)[1];
+			final Logger logger = Logger.getLogger("asciidocgenerator-web");
+
+			final Path projectBaseDir = Paths.get(baseDirectoryService.getBaseDirectory(), source.getRepositoryname());
+
+			Path relativeFromBaseDir = projectBaseDir.relativize(filePath);
+
+			StringBuilder locationWithoutProjectBaseDir = new StringBuilder("/");
+			relativeFromBaseDir.iterator().forEachRemaining((pathPart) -> {
+				locationWithoutProjectBaseDir.append(pathPart).append("/");
+			});
+
 			updatedURL.append("/blob/");
 			updatedURL.append(source.getVcsversion());
-			updatedURL.append(locationWithoutParentFolders);
+			updatedURL.append(locationWithoutProjectBaseDir.substring(0, locationWithoutProjectBaseDir.length() - 1));
 
 		}
 
@@ -168,7 +184,7 @@ public class HtmlRenderServiceBean {
 
 			Files.write(newFilePath, newHtml.toString().getBytes(StandardCharsets.UTF_8));
 		} catch (IOException e) {
-			Logger.getLogger(getClass().toString()).log(Level.SEVERE, "problem generating html", e);
+			Logger.getLogger("asciidocgenerator-web").log(Level.SEVERE, "problem generating html", e);
 		}
 	}
 

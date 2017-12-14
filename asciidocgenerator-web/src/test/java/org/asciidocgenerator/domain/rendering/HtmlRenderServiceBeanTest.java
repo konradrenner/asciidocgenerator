@@ -25,28 +25,38 @@ package org.asciidocgenerator.domain.rendering;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.asciidocgenerator.BaseDirectoryService;
 import org.asciidocgenerator.domain.MetaInformation;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  *
  * @author Konrad Renner
  */
+@RunWith(MockitoJUnitRunner.class)
 public class HtmlRenderServiceBeanTest {
 
 	private HtmlRenderServiceBean underTest;
 
+	@Mock
+	private BaseDirectoryService baseDirService;
+
 	@Before
 	public void setUp() {
-		underTest = new HtmlRenderServiceBean();
+		when(baseDirService.getBaseDirectory()).thenReturn("tmp");
+		underTest = new HtmlRenderServiceBean(baseDirService);
 	}
 
 	@Test
 	public void testUpdateDocURL() {
-		Path path = Paths.get("tmp", "group", "repo", "folder1", "folder2", "file.adoc");
+		Path path = Paths.get("tmp", "repo", "folder1", "folder2", "file.adoc");
 		MetaInformation metainfo = MetaInformation	.newInstance()
 													.projektname("project")
 													.repositoryname("repo")
@@ -65,7 +75,7 @@ public class HtmlRenderServiceBeanTest {
 
 	@Test
 	public void testUpdateDocURLGroupNameSameAsRepoName() {
-		Path path = Paths.get("tmp", "repo", "repo", "folder1", "folder2", "file.adoc");
+		Path path = Paths.get("tmp", "repo", "folder1", "folder2", "file.adoc");
 		MetaInformation metainfo = MetaInformation	.newInstance()
 													.projektname("project")
 													.repositoryname("repo")
@@ -84,7 +94,7 @@ public class HtmlRenderServiceBeanTest {
 
 	@Test
 	public void testUpdateDocURLGroupLocalhost() {
-		Path path = Paths.get("tmp", "repo", "repo", "folder1", "folder2", "file.adoc");
+		Path path = Paths.get("tmp", "repo", "folder1", "folder2", "file.adoc");
 		MetaInformation metainfo = MetaInformation	.newInstance()
 													.projektname("project")
 													.repositoryname("repo")
