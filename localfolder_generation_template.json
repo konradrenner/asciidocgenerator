@@ -1,5 +1,5 @@
 {
   "name": "asciidoc-examples",
-  "localPath" : "/home/koni/Entwicklung/ARZ/asciidocgenerator/asciidoc-examples/",
+  "localPath" : "./asciidoc-examples/",
   "version" : "1.0.0"
 }
