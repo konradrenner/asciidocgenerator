@@ -216,12 +216,15 @@ public class MainNavigation
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MainNavigation other = (MainNavigation) obj;
 		return Objects.equals(mainNavigationName, other.getMainNavigationName())
 				&& Objects.equals(group, other.getGroup());

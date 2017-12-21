@@ -132,7 +132,6 @@ public class HtmlRenderServiceBean {
 		// path to file in gitlab
 		// https://gitlab.com/group/repository/blob/version/folderxyz/filexyz.adoc
 		// URL which Gitlab sends over HTTP: https://gitlab.com/group/repository/
-		String urlToRepo = source.getVcsurl();
 		StringBuilder updatedURL = new StringBuilder(source.getVcsurl());
 		String vcsurl = source.getVcsurl();
 
@@ -140,24 +139,20 @@ public class HtmlRenderServiceBean {
 			// if it does not come from an git server, it is not possible to update the url so that it points to the
 			// source file
 			return source;
-		} else {
-
-			final Logger logger = Logger.getLogger("asciidocgenerator-web");
-
-			final Path projectBaseDir = Paths.get(baseDirectoryService.getBaseDirectory(), source.getRepositoryname());
-
-			Path relativeFromBaseDir = projectBaseDir.relativize(filePath);
-
-			StringBuilder locationWithoutProjectBaseDir = new StringBuilder("/");
-			relativeFromBaseDir.iterator().forEachRemaining((pathPart) -> {
-				locationWithoutProjectBaseDir.append(pathPart).append("/");
-			});
-
-			updatedURL.append("/blob/");
-			updatedURL.append(source.getVcsversion());
-			updatedURL.append(locationWithoutProjectBaseDir.substring(0, locationWithoutProjectBaseDir.length() - 1));
-
 		}
+
+		final Path projectBaseDir = Paths.get(baseDirectoryService.getBaseDirectory(), source.getRepositoryname());
+
+		Path relativeFromBaseDir = projectBaseDir.relativize(filePath);
+
+		StringBuilder locationWithoutProjectBaseDir = new StringBuilder("/");
+		relativeFromBaseDir.iterator().forEachRemaining((pathPart) -> {
+			locationWithoutProjectBaseDir.append(pathPart).append("/");
+		});
+
+		updatedURL.append("/blob/");
+		updatedURL.append(source.getVcsversion());
+		updatedURL.append(locationWithoutProjectBaseDir.substring(0, locationWithoutProjectBaseDir.length() - 1));
 
 		return MetaInformation	.newInstance()
 								.projektname(source.getProjektname())

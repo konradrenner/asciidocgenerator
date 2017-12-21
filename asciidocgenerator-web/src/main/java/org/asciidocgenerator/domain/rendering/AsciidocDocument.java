@@ -147,12 +147,15 @@ public class AsciidocDocument {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		AsciidocDocument other = (AsciidocDocument) obj;
 		if (this.sourceFile.equals(other.getSourceFile())) {
 			return true;
@@ -210,7 +213,8 @@ public class AsciidocDocument {
 			}
 
 			try (Reader reader = new StringReader(contentString);
-                                Writer writer = new OutputStreamWriter(new FileOutputStream(destinationFile.toFile()), StandardCharsets.UTF_8)) {
+					Writer writer = new OutputStreamWriter(	new FileOutputStream(destinationFile.toFile()),
+															StandardCharsets.UTF_8)) {
 				convertTo(reader, writer, "html");
 			} catch (IOException e) {
 				Logger.getLogger("AsciidocDocument").log(Level.SEVERE, "converting to html failed", e);
